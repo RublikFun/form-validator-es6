@@ -4,25 +4,6 @@ var Answer = function(container){
 	this.container   = container;
 	this.value       = {};
 	this.validations = [];
-	Object.defineProperty( this, 'validation', {
-		get: function(){
-      var i, allAreValid = true;
-      for(i = 0; i < this.validations.length; i++) {
-          if(this.validations[i] === false) {
-              allAreValid = false;
-              break;
-          }
-      }
-      return allAreValid;
-		},
-		set: function(arg){
-			if(typeof arg === 'boolean'){
-				this.validations.push(arg);
-				return;
-			}
-			this.validations = [];
-		}
-	});
 	this.init();	
 };
 Answer.prototype = {
@@ -31,6 +12,23 @@ Answer.prototype = {
 		this.setRequired();
 		this.formatValue();
 		this.setChange(this.container);
+	},
+	setValidation: function(arg){
+		if(typeof arg === 'boolean'){
+			this.validations.push(arg);
+			return;
+		}
+		this.validations = [];
+	},
+	getValidation: function(){
+		var i, allAreValid = true;
+		for(i = 0; i < this.validations.length; i++) {
+			if(this.validations[i] === false) {
+				allAreValid = false;
+				break;
+			}
+		}
+		return allAreValid;
 	},
 	setRanges: function setRanges(){
 		var self = this;
@@ -205,15 +203,15 @@ Answer.prototype = {
 
 
 	isValid: function isValid(){
-		this.validation = [];
+		this.setValidation();
 		for(var answer in this.value){
 			if(typeof this.value[answer] === 'object'){
-				this.validation = this.checkGroupValidity(this.value[answer]);
+				this.setValidation( this.checkGroupValidity(this.value[answer]) );
 			} else{
-				this.validation = this.checkIndividualValidity(answer, this.value[answer]);
+				this.setValidation( this.checkIndividualValidity(answer, this.value[answer]) );
 			}
 		}
-		return this.validation;
+		return this.getValidation();
 	},
 	checkGroupValidity: function checkGroupValidity(group){
 		var groupIsValid = true;

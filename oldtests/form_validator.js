@@ -1,4 +1,10 @@
-var expect = chai.expect;
+var $ = require('jquery');
+var mocha = require('mocha');
+var chai = require('chai');
+var expect = chai.expect();
+
+
+mocha.setup('bdd')
 
 describe('Script', function(){
 	var testScript
@@ -157,7 +163,7 @@ describe('Answers', function(){
 			}) 
 			testAnswers.all[0].container.trigger('change')
 			testAnswers.report()
-			expect( JSON.stringify(testAnswers.record) ).to.eq(JSON.stringify({test: "test0", test2: "test1", test3: "test2"}) )
+			expect( JSON.stringify(testAnswers.getRecord()) ).to.eq(JSON.stringify({test: "test0", test2: "test1", test3: "test2"}) )
 		})
 		it("should handle multidimensional objects as well", function(){
 			$('#mocha_sandbox').html('<input type="text" class="test-input" data-field="test" data-grouping="testgroup"><input type="text" class="test-input" data-field="test4" data-grouping="testgroup"><input type="text" class="test-input" data-field="test2"><input type="text" class="test-input" data-field="test3">');
@@ -168,7 +174,7 @@ describe('Answers', function(){
 			}) 
 			testAnswers.all[0].container.trigger('change')
 			testAnswers.report()
-			expect( JSON.stringify(testAnswers.record) ).to.eq(JSON.stringify({testgroup: {test:"test0", test4: 'test1'}, test2: "test2", test3: "test3"}))
+			expect( JSON.stringify(testAnswers.getRecord()) ).to.eq(JSON.stringify({testgroup: {test:"test0", test4: 'test1'}, test2: "test2", test3: "test3"}))
 		})
 	})
 	describe('#resetAll', function(){
@@ -183,7 +189,7 @@ describe('Answers', function(){
 			testAnswers.report();			
 
 			testAnswers.resetAll();
-			expect( JSON.stringify(testAnswers.record) ).to.eq(JSON.stringify({testgroup: {test:'', test4: ''}, test2: '', test3: ''}))
+			expect( JSON.stringify(testAnswers.getRecord()) ).to.eq(JSON.stringify({testgroup: {test:'', test4: ''}, test2: '', test3: ''}))
 		})
 	})
 	describe("#createAnswer", function(){

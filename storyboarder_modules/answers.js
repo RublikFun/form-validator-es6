@@ -1,21 +1,21 @@
+var Answer = require('storyboarder-answer');
+
 var Answers = function(){
 	this.privateValue = {};
 	this.all = [];
-	Object.defineProperty( this, 'record', {
-		get: function(){
-			this.report()
-			return this.privateValue
-		},
-		set: function(arg){
-			this.privateValue = arg
-		}
-	})
 }
 Answers.prototype = {
 	createAnswer : function createAnswer(dom){
-		var answer = new Answer(dom)
-		this.all.push(answer)
+		var answer = new Answer(dom);
+		this.all.push(answer);
 		return answer
+	},
+	getRecord: function(){
+		this.report();
+		return this.privateValue
+	},
+	setRecord: function(arg){
+		this.privateValue = arg
 	},
 	validateAll : function validateAll(){
 		for(var i = 0; i< this.all.length; i++){

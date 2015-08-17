@@ -1,3 +1,5 @@
+var Answer = require('storyboarder-answer');
+
 var Scene = function(container, callback, args, script, answerClass, buttonClass){
 	this.container   = container;
 	this.answerClass = answerClass || '.js-answer';

@@ -1,3 +1,8 @@
+var Answers = require('storyboarder-answers');
+var Scene = require('storyboarder-scene');
+module.exports = {
+	
+}
 var Script = function(container, onFinished, args, answers, sceneClass, answerClass, buttonClass){
 	this.container   = container;
 	this.scenes      = [];
@@ -67,6 +72,7 @@ Script.prototype = {
 	handleFunction : function handleFunction(funct, args){
 		funct.call(this, args);
 	},
+
 	handleArray : function handleArray(){
 		this.formatArgsArray()
 		for( let i = 0; i< this.onFinished.length; i++ ){
