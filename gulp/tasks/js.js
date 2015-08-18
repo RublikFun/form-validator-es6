@@ -9,6 +9,6 @@ gulp.task('js', function() {
 		.pipe( jsLint( config.js.guidelines ) )
 		.pipe( jsLint.reporter('jshint-stylish') )
   	.pipe( babel() )
-  	.pipe( concat( 'storyboarder.js' ) )
+  	// .pipe( concat( 'storyboarder.js' ) )
     .pipe( gulp.dest( config.js.dest ) );
 });

@@ -1,5 +1,6 @@
-var Answer = require('storyboarder-answer');
+'use strict';
 
+var Answer = require('./answer.js');
 var Scene = function(container, callback, args, script, answerClass, buttonClass){
 	this.container   = container;
 	this.answerClass = answerClass || '.js-answer';
@@ -79,3 +80,4 @@ Scene.prototype = {
 		delete this
 	}
 }
+module.exports = Scene;

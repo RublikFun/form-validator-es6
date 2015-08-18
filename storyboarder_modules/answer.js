@@ -1,3 +1,5 @@
+'use strict';
+
 var Answer = function(container){
 	this.ranges      = {};
 	this.required    = {};
@@ -295,3 +297,4 @@ Answer.prototype = {
 
 };
 
+module.exports = Answer;
