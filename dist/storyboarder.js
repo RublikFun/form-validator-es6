@@ -1,7 +1,5 @@
 'use strict';
 
-module.exports = Answer;
-
 var Answer = function Answer(container) {
 	this.ranges = {};
 	this.required = {};
@@ -301,8 +299,6 @@ Answer.prototype = {
 };
 'use strict';
 
-var Answer = require('storyboarder-answer');
-module.exports = Answers;
 var Answers = function Answers() {
 	this.privateValue = {};
 	this.all = [];
@@ -340,8 +336,6 @@ Answers.prototype = {
 };
 'use strict';
 
-var Answer = require('storyboarder-answer');
-module.exports = Scene;
 var Scene = function Scene(container, callback, args, script, answerClass, buttonClass) {
 	this.container = container;
 	this.answerClass = answerClass || '.js-answer';
@@ -423,10 +417,6 @@ Scene.prototype = {
 };
 'use strict';
 
-var Answers = require('storyboarder-answers');
-var Scene = require('storyboarder-scene');
-module.exports = Script;
-
 var Script = function Script(container, onFinished, args, answers, sceneClass, answerClass, buttonClass) {
 	this.container = container;
 	this.scenes = [];
@@ -448,17 +438,23 @@ Script.prototype = {
 		this.start();
 	},
 
-	addScene: function addScene(el, callback, args) {
-		var callback = callback || false;
-		this.scenes.push(new Scene(el, callback, args, this, this.answerClass, this.buttonClass));
+	addScene: function addScene(el) {
+		var callback = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+		var args = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
+		var scene = new Scene(el, callback, args, this, this.answerClass, this.buttonClass);
+		this.scenes.push(scene);
 	},
 	removeScene: function removeScene() {
 		this.scenes.pop().destroy();
 	},
 
-	addAt: function addAt(index, el, callback, args) {
-		var callback = callback || false;
-		this.scenes.splice(index, 0, new Scene(el, callback, args, this, this.answerClass, this.buttonClass));
+	addAt: function addAt(index, el) {
+		var callback = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+		var args = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
+
+		var scene = new Scene(el, callback, args, this, this.answerClass, this.buttonClass);
+		this.scenes.splice(index, 0, scene);
 	},
 	removeAt: function removeAt(index) {
 		this.scenes.splice(index, 1)[0].destroy();
@@ -501,7 +497,7 @@ Script.prototype = {
 		}
 	},
 	formatArgsArray: function formatArgsArray() {
-		if (typeof this.args == 'object') {
+		if (typeof this.args === 'object') {
 			return;
 		}
 		this.args = new Array(this.args);
@@ -509,7 +505,7 @@ Script.prototype = {
 	finish: function finish() {
 		this.container.addClass('finished');
 		if (this.onFinished) {
-			if (typeof this.onFinished == 'function') {
+			if (typeof this.onFinished === 'function') {
 				this.handleFunction(this.onFinished, this.args);
 				return;
 			}

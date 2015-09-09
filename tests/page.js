@@ -1,9 +1,9 @@
 /* jshint ignore:start */
-
 'use strict';
-
 describe('page.js', function() {
   it('runs react jsx', function() {
+  	var thing = new Script();
+  	console.log(thing)
   });
 });
 

@@ -1,8 +1,5 @@
 'use strict';
 
-var Answers = require('./answers.js');
-var Scene = require('./scene.js');
-
 var Script = function( container, onFinished, args, answers, sceneClass, answerClass, buttonClass ) {
 	this.container   = container;
 	this.scenes      = [];
@@ -111,4 +108,3 @@ Script.prototype = {
 		scene.callback = callback.bind( scene );
 	}
 };
-module.exports = Script;

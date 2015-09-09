@@ -1,5 +1,5 @@
-var Script = require('./dist/script.js');
+var Storyboard = require('./dist/storyboarder.min')
 
 module.exports = function(){
-	console.log( new Script() )
+	console.log( Storyboard )
 }()

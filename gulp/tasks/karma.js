@@ -4,7 +4,6 @@ var gulp = require('gulp');
 var karma = require('karma');
 var notifier = require('node-notifier');
 
-
 var karmaTask = function(done) {
   var server = new karma.Server({
     configFile: process.cwd() + '/karma.conf.js'

@@ -1,5 +1,4 @@
 'use strict';
-var Answer = require('./answer.js');
 
 var Answers = function(){
 	this.privateValue = {};
@@ -36,4 +35,3 @@ Answers.prototype = {
 		this.report();
 	}
 }
-module.exports = Answers;

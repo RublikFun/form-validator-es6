@@ -296,5 +296,3 @@ Answer.prototype = {
 	}
 
 };
-
-module.exports = Answer;
