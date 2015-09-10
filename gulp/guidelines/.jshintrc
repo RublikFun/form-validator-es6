@@ -48,11 +48,18 @@
   // Enforce placing 'use strict' at the top function scope
   "strict": true,
 
+  // Enforce curly braces around blocks
+  "curly": true,  
+
   // Prohibit use of explicitly undeclared variables.
   "undef": true,
 
   // Warn when variables are defined but never used.
   "unused": true,
+
+  // Warn when we nest more than two levels.
+
+  "maxdepth": 2,
 
   /*
    * RELAXING OPTIONS

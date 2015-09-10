@@ -4,6 +4,7 @@ describe('Scene', function(){
   beforeEach(function() {
 		fixture.load('html/scene.html');
 		testScene = new Scene( $('.js-scene') );
+		testScene.autoInit({});
   });
   afterEach(function(){
     testScene = {};  	

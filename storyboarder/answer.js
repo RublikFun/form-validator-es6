@@ -108,15 +108,15 @@ Answer.prototype = {
 	},
 	formattedValue: function formattedValue(el){
 		var val = {};
-		var key = el.data('field');
-				val[key] = this.getDefault( el );		
+		var key = el.data( 'field' );
+				val[ key ] = this.getDefault( el );		
 		if( this.hasValue(el) ){
-			val[key] = this.getValueOrDefault( el );
+			val[ key ] = this.getValueOrDefault( el );
 			this.removeError( key );
 			return val;
 		}
-		if( this.shouldOverwrite(el) ){
-			val[key] = this.getDefault( el );					
+		if( this.shouldOverwrite( el ) ){
+			val[ key ] = this.getDefault( el );					
 			return val;
 		}
 		return;
@@ -137,50 +137,54 @@ Answer.prototype = {
 	},
 	deleteValue: function deleteValue( el ){
 		var self = this;
-		$(el).each(function() {
-			delete self.value[$(this).data('field')];
-		});
+		$( el ).each( function() {
+			delete self.value[ $( this ).data( 'field' ) ];
+		} );
 	},
-	checkForCallback: function checkForCallback(el){
-		if ( this.hasValue(el) ) {
-			return this.revealCallback(el);
+	checkForCallback: function checkForCallback( el ){
+		if ( this.hasValue( el ) ) {
+			return this.revealCallback( el );
 		}
 
-		return this.revertCallback(el);
+		return this.revertCallback( el );
 	},
-	revealCallback: function revealCallback(el){
-		var callbackElement = $('.' + el.data('callback')),
+	revealCallback: function revealCallback( el ){
+		var callbackElement = $( '.' + el.data( 'callback' ) ),
 		self = this;
-		if(callbackElement.length > 0){
-			callbackElement.each(function() {
-				if(self.hasField(this)){
-					self.addAnswer($(this));
+		if( callbackElement.length > 0 ){
+			callbackElement.each( function() {
+				if( self.hasField( this ) ){
+					self.addAnswer( $( this ) );
 				}
-			});
-			callbackElement.addClass('active');
+			} );
+			callbackElement.addClass( 'active' );
 		}
 	},
-	revertCallback: function revertCallback(el){
-		var callbackElement = $('.' + el.data('callback'));
-		if(callbackElement.length > 0){		
-			this.clearValue(callbackElement);
-			this.removeAnswer(callbackElement);
-			callbackElement.removeClass('active');
+	revertCallback: function revertCallback( el ){
+		var callbackElement = $( '.' + el.data( 'callback' ) );
+		if( callbackElement.length > 0 ){		
+			this.clearValue( callbackElement );
+			this.removeAnswer( callbackElement );
+			callbackElement.removeClass( 'active' );
 		}
 	},
 
 
 	hasValue: function hasValue(container){
-		return this.isValidInput(container) || this.isValidCheckbox(container) || this.isValidSelect(container);
+		return this.isValidInput(container) || 
+					 this.isValidCheckbox(container) ||
+					 this.isValidSelect(container);
 	},
 	shouldOverwrite: function shouldOverwrite(el){
-		return ( this.isDuplicate(el) && this.isFirst(el) ) || !this.isDuplicate(el);
+		return ( this.isDuplicate(el) && 
+						 this.isFirst(el) ) || 
+						!this.isDuplicate(el);
 	},
 	isDuplicate: function isUnique(el){
-		return $("[data-field='"+el.data('field')+"']").length > 1;
+		return $('[data-field="'+el.data('field')+'"]').length > 1;
 	},
 	isFirst: function isFirst(el){
-		return $("[data-field='"+el.data('field')+"']").index(el) === 0;
+		return $('[data-field="'+el.data('field')+'"]').index(el) === 0;
 	},
 	clearValue: function clearValue(el){
 		if( this.isValidInput(el) ){
@@ -206,11 +210,14 @@ Answer.prototype = {
 
 	isValid: function isValid(){
 		this.setValidation();
-		for(var answer in this.value){
-			if(typeof this.value[answer] === 'object'){
-				this.setValidation( this.checkGroupValidity(this.value[answer]) );
+		for( var answer in this.value ){
+			var value = this.value[answer];
+			if( typeof value === 'object' ){
+				let validity = this.checkGroupValidity( value );
+				this.setValidation( validity );
 			} else{
-				this.setValidation( this.checkIndividualValidity(answer, this.value[answer]) );
+				let validity = this.checkIndividualValidity( answer, value );
+				this.setValidation( validity );
 			}
 		}
 		return this.getValidation();
@@ -223,7 +230,8 @@ Answer.prototype = {
 		return groupIsValid;
 	},
 	checkIndividualValidity: function checkIndividualValidity(key, value){
-			var fieldIsValid = this.validatePresence(key, value) && this.validateRange(key, value);
+			var fieldIsValid = this.validatePresence(key, value) && 
+												 this.validateRange(key, value);
 			if(fieldIsValid){
 				this.removeError(key);		
 			}
@@ -271,7 +279,7 @@ Answer.prototype = {
 		return this.required[key] === false || value !== '';
 	},
 	isBetween: function isBetween(key, value){
-		if(this.ranges[key] === undefined){ return true }
+		if(this.ranges[key] === undefined){ return true; }
 		var max = this.ranges[key].max;
 		var min = this.ranges[key].min;
 		if(max === undefined || min === undefined){

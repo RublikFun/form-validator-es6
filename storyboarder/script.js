@@ -1,18 +1,36 @@
 'use strict';
 
-var Script = function( container, onFinished, args, answers, sceneClass, answerClass, buttonClass ) {
+var Script = function( container, auto=true ) {
 	this.container   = container;
 	this.scenes      = [];
-	this.sceneClass  = sceneClass  || '.js-scene';
-	this.answerClass = answerClass || '.js-answer';
-	this.buttonClass = buttonClass || '.js-button';
-	this.onFinished  = onFinished  || false;
-	this.args        = args;
-	this.answers     = answers     || new Answers();
 	this.current     = 0;
-	// this.init();
+	if( auto ){
+		this.autoInit();
+	}
+	return this;
 };
 Script.prototype = {
+	setFinished : function setFinished( onFinished, args ){
+		this.onFinished = onFinished  || false;
+		this.args = args || false;
+		return this;
+	},
+	setScene : function setScene( klass ){
+		this.sceneClass  = klass  || '.js-scene';
+		return this;
+	},
+	setButton : function setButton( klass ){
+		this.buttonClass = klass || '.js-button';
+		return this;
+	},
+	setAnswer : function setAnswer( klass ){
+		this.answerClass = klass || '.js-answer';
+		return this;
+	},
+	setAnswers: function setAnswers( answers ){
+		this.answers = answers || new Answers();
+		return this;
+	},
 	init : function init(){
 		var self = this;
 		this.container.find( this.sceneClass ).each( function(){
@@ -20,9 +38,18 @@ Script.prototype = {
 		} );
 		this.start();
 	},
+	autoInit : function autoInit( opts = {} ){
+		this.setFinished( opts.onFinished, opts.arguments )
+				.setScene( opts.scene )
+				.setButton( opts.button )
+				.setAnswer( opts.answer )
+				.setAnswers( opts.answers )
+				.init();
+	},
 
-	addScene : function addScene( el, callback = false, args = false ){
-		let scene = new Scene( el, callback, args, this, this.answerClass, this.buttonClass );
+	addScene : function addScene( el, opts ){
+		let scene = new Scene( el );
+		scene.autoInit( opts );
 		this.scenes.push( scene );
 	},
 	removeScene : function removeScene(){
@@ -30,8 +57,9 @@ Script.prototype = {
 	},
 
 
-	addAt : function addAt( index, el, callback = false, args = false ){
-		let scene = new Scene( el, callback, args, this, this.answerClass, this.buttonClass );
+	addAt : function addAt( index, el, opts ){
+		let scene = new Scene( el );
+		scene.autoInit( opts );
 		this.scenes.splice( index, 0, scene );
 	},
 	removeAt : function removeAt( index ){

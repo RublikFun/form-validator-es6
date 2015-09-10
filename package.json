@@ -7,13 +7,20 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp karma",
+    "lint": "gulp lint",
+    "build": "gulp production",
+    "prepublish": "gulp production",
+    "prebuild": "npm run lint",
+    "clean": "rm -r dist/*",
+    "start": "gulp",
+    "watch": "gulp"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/omadahealth/form-validator-es6.git"
   },
-  "author": "Stephen Standridge <Stephen@formisfunction.io> (www.formisfunction.io)",
+  "author": "Stephen Standridge <stephen.standridge@omadahealth.com> (www.formisfunction.io)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/omadahealth/form-validator-es6/issues"
@@ -48,5 +55,8 @@
     "require-dir": "^0.3.0",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0"
-  }
+  },
+  "dependencies": {
+    "jquery": "^1.8.3"
+  }  
 }

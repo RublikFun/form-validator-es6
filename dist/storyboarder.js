@@ -180,10 +180,10 @@ Answer.prototype = {
 		return this.isDuplicate(el) && this.isFirst(el) || !this.isDuplicate(el);
 	},
 	isDuplicate: function isUnique(el) {
-		return $("[data-field='" + el.data('field') + "']").length > 1;
+		return $('[data-field="' + el.data('field') + '"]').length > 1;
 	},
 	isFirst: function isFirst(el) {
-		return $("[data-field='" + el.data('field') + "']").index(el) === 0;
+		return $('[data-field="' + el.data('field') + '"]').index(el) === 0;
 	},
 	clearValue: function clearValue(el) {
 		if (this.isValidInput(el)) {
@@ -209,10 +209,13 @@ Answer.prototype = {
 	isValid: function isValid() {
 		this.setValidation();
 		for (var answer in this.value) {
-			if (typeof this.value[answer] === 'object') {
-				this.setValidation(this.checkGroupValidity(this.value[answer]));
+			var value = this.value[answer];
+			if (typeof value === 'object') {
+				var validity = this.checkGroupValidity(value);
+				this.setValidation(validity);
 			} else {
-				this.setValidation(this.checkIndividualValidity(answer, this.value[answer]));
+				var validity = this.checkIndividualValidity(answer, value);
+				this.setValidation(validity);
 			}
 		}
 		return this.getValidation();
@@ -336,17 +339,29 @@ Answers.prototype = {
 };
 'use strict';
 
-var Scene = function Scene(container, callback, args, script, answerClass, buttonClass) {
-	this.container = container;
-	this.answerClass = answerClass || '.js-answer';
-	this.button = this.findButton(buttonClass);
-	this.callback = callback || false;
-	this.args = args || false;
+var Scene = function Scene(klass) {
+	this.container = klass;
 	this.bound = false;
-	this.script = script || undefined;
-	this.init();
+	return this;
 };
 Scene.prototype = {
+	setCallback: function setCallback(callback, args) {
+		this.callback = callback || false;
+		this.args = args || false;
+		return this;
+	},
+	setScript: function setScript(script) {
+		this.script = script || undefined;
+		return this;
+	},
+	setButton: function setButton(klass) {
+		this.button = this.findButton(klass);
+		return this;
+	},
+	setAnswer: function setAnswer(klass) {
+		this.answerClass = klass || '.js-answer';
+		return this;
+	},
 	init: function init() {
 		var self = this;
 		this.createAnswers();
@@ -354,12 +369,18 @@ Scene.prototype = {
 			self.bindClick($(this));
 		});
 	},
+	autoInit: function autoInit() {
+		var opts = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+		this.setCallback(opts.callback, opts.arguments).setScript(opts.script).setButton(opts.button).setAnswer(opts.answer).init();
+	},
 	createAnswers: function createAnswers() {
 		if (this.script === undefined) {
 			this.answer = new Answer(this.container.find(this.answerClass));
 			return true;
 		}
-		this.answer = this.script.answers.createAnswer(this.container.find(this.answerClass));
+		var answerEl = this.container.find(this.answerClass);
+		this.answer = this.script.answers.createAnswer(answerEl);
 	},
 	findButton: function findButton(buttonClass) {
 		if (buttonClass !== undefined) {
@@ -380,7 +401,7 @@ Scene.prototype = {
 		this.container.removeClass('error');
 	},
 	handleCallback: function handleCallback() {
-		var args = typeof this.args === "function" ? this.args() : this.args;
+		var args = typeof this.args === 'function' ? this.args() : this.args;
 
 		if (this.callback) {
 			this.callback(args);
@@ -417,19 +438,39 @@ Scene.prototype = {
 };
 'use strict';
 
-var Script = function Script(container, onFinished, args, answers, sceneClass, answerClass, buttonClass) {
+var Script = function Script(container) {
+	var auto = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+
 	this.container = container;
 	this.scenes = [];
-	this.sceneClass = sceneClass || '.js-scene';
-	this.answerClass = answerClass || '.js-answer';
-	this.buttonClass = buttonClass || '.js-button';
-	this.onFinished = onFinished || false;
-	this.args = args;
-	this.answers = answers || new Answers();
 	this.current = 0;
-	// this.init();
+	if (auto) {
+		this.autoInit();
+	}
+	return this;
 };
 Script.prototype = {
+	setFinished: function setFinished(onFinished, args) {
+		this.onFinished = onFinished || false;
+		this.args = args || false;
+		return this;
+	},
+	setScene: function setScene(klass) {
+		this.sceneClass = klass || '.js-scene';
+		return this;
+	},
+	setButton: function setButton(klass) {
+		this.buttonClass = klass || '.js-button';
+		return this;
+	},
+	setAnswer: function setAnswer(klass) {
+		this.answerClass = klass || '.js-answer';
+		return this;
+	},
+	setAnswers: function setAnswers(answers) {
+		this.answers = answers || new Answers();
+		return this;
+	},
 	init: function init() {
 		var self = this;
 		this.container.find(this.sceneClass).each(function () {
@@ -437,23 +478,24 @@ Script.prototype = {
 		});
 		this.start();
 	},
+	autoInit: function autoInit() {
+		var opts = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-	addScene: function addScene(el) {
-		var callback = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-		var args = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+		this.setFinished(opts.onFinished, opts.arguments).setScene(opts.scene).setButton(opts.button).setAnswer(opts.answer).setAnswers(opts.answers).init();
+	},
 
-		var scene = new Scene(el, callback, args, this, this.answerClass, this.buttonClass);
+	addScene: function addScene(el, opts) {
+		var scene = new Scene(el);
+		scene.autoInit(opts);
 		this.scenes.push(scene);
 	},
 	removeScene: function removeScene() {
 		this.scenes.pop().destroy();
 	},
 
-	addAt: function addAt(index, el) {
-		var callback = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-		var args = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
-
-		var scene = new Scene(el, callback, args, this, this.answerClass, this.buttonClass);
+	addAt: function addAt(index, el, opts) {
+		var scene = new Scene(el);
+		scene.autoInit(opts);
 		this.scenes.splice(index, 0, scene);
 	},
 	removeAt: function removeAt(index) {

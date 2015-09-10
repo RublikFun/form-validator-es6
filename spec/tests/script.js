@@ -3,7 +3,7 @@ describe('Script', function(){
 	var testScript
   beforeEach(function() {
 		fixture.load('html/script-basic.html');
-    testScript = new Script($('.test-script'))
+    testScript = new Script( $('.test-script') )
   });
   afterEach(function(){
     testScript = {};  	
@@ -11,15 +11,18 @@ describe('Script', function(){
   }) 
 	describe("#addScene", function(){
 		it("should add a scene to the end of the flow", function(){
-	    testScript.init();
 	    expect(testScript.scenes.length).to.eq(2)
 	    testScript.addScene($('.js-alt-scene'))
 	    expect(testScript.scenes.length).to.eq(3)	    
 		})
+		it("should take an argument object to construct the scene", function(){
+	    expect(testScript.scenes.length).to.eq(2)			
+			testScript.addScene($('.js-alt-scene'), {callback: 'hello'} )
+			expect(testScript.scenes[2].callback).to.eq('hello')
+		})		
 	})
 	describe("#addCallbackToScene", function(){
 		it("should add a callback to the scene specified", function(){
-	    testScript.init();
 	    var callback = function(){
 	    	this.hello = this.args
 	    };
@@ -31,16 +34,18 @@ describe('Script', function(){
 	})	
 	describe("#addAt", function(){
 		it("should add a scene at the index", function(){
-	    testScript.init();		    
 	    expect(testScript.scenes.length).to.eq(2)
 	    testScript.addAt(1, $('.js-alt-scene'))
 	    expect(testScript.scenes.length).to.eq(3)		
 	    expect(testScript.scenes[1].container).to.have.class('js-alt-scene')
 		})
+		it("should take an argument object to construct the scene", function(){
+	    testScript.addAt(0, $('.js-alt-scene'), {callback: 'hello'})
+	    expect(testScript.scenes[0].callback).to.eq('hello')
+		})				
 	})  
 	describe("#removeAt", function(){
 		it("should remove a scene at the index", function(){
-	    testScript.init();		    
 	    expect(testScript.scenes.length).to.eq(2)
 	    testScript.addAt(1, $('.js-alt-scene'))
 	    testScript.removeAt(0)		    
@@ -50,7 +55,6 @@ describe('Script', function(){
 	})  	 	 	
 	describe("#removeScene", function(){
 		it("should remove a scene at the end of the flow", function(){
-	    testScript.init();	    
 	    expect(testScript.scenes.length).to.eq(2)
 	    testScript.removeScene()
 	    expect(testScript.scenes.length).to.eq(1)	    
@@ -58,14 +62,12 @@ describe('Script', function(){
 	}) 
 	describe("#next", function(){
 		it("should move to the next scene if there are more scenes", function(){
-	    testScript.init();	    
 	    expect(testScript.scenes[0].container).to.have.class('active')			    
 	    testScript.next()
 	    expect(testScript.scenes[0].container).not.to.have.class('active')		
 	    expect(testScript.scenes[1].container).to.have.class('active')			    
 		})
 		it("should finish the script if there are no more scenes", function(){
-	    testScript.init();	    
 	    expect(testScript.scenes[0].container).to.have.class('active')			    
 	    testScript.next()
 	    testScript.next()
@@ -75,7 +77,6 @@ describe('Script', function(){
 	})   
 	describe("#previous", function(){
 		it("should move to the previous scene if it is not the first", function(){
-	    testScript.init();	    
 	    expect(testScript.scenes[0].container).to.have.class('active')			    
 	    testScript.next()
 	    expect(testScript.scenes[0].container).not.to.have.class('active')		
@@ -85,7 +86,6 @@ describe('Script', function(){
 	    expect(testScript.scenes[0].container).to.have.class('active')		    
 		})
 		it("should reset the script if it is the first", function(){
-	    testScript.init();	    
 	    testScript.previous()
 	    expect(testScript.scenes[0].container).to.have.class('active')					
 		})		
