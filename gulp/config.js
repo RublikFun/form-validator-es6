@@ -6,7 +6,7 @@ module.exports = {
     name: 'storyboarder.js'
   },
   tests: {
-    src: './tests/*.js',
+    src: ['./spec/tests/*.js', './spec/fixtures/**/*', './dist/storyboarder.js'],
     dest: './tests/dist'
   },
   production: {
