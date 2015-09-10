@@ -190,7 +190,7 @@ Answer.prototype = {
 			el.val('');
 		}
 		el.prop('checked', false);
-		el.prop('selected', false);
+		el.find('option').prop('selected', false);
 	},
 	hasField: function hasField(el) {
 		if ($(el).data('field')) {

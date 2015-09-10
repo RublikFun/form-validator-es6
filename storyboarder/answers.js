@@ -6,7 +6,7 @@ var Answers = function(){
 }
 Answers.prototype = {
 	createAnswer : function createAnswer(dom){
-		var answer = new Answer(dom);
+		var answer = new Answer( dom );
 		this.all.push(answer);
 		return answer
 	},

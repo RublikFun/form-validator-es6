@@ -7,9 +7,11 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
     'plugins' : [
+        'karma-jquery',
         'karma-mocha',
         'karma-sinon-chai',
         'karma-nyan-reporter',
+        'karma-chai-jquery',
         'karma-chrome-launcher',
         'karma-fixture',
         'karma-html2js-preprocessor',
@@ -17,14 +19,13 @@ module.exports = function(config) {
     ],
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: [ 'mocha', 'sinon-chai', 'fixture' ],
+    frameworks: [ 'mocha', 'chai-jquery', 'jquery-1.8.3', 'sinon-chai', 'fixture' ],
 
     // list of files / patterns to load in the browser
     files: [
-      './node_modules/jquery/dist/jquery.min.js',
-      './tests/fixtures/**/*',
+      './spec/fixtures/**/*',
       './dist/storyboarder.js',
-      './tests/*.js'
+      './spec/tests/*.js'
     ],
 
     // fixture preprocessing allows for both html and json fixtures
@@ -32,10 +33,10 @@ module.exports = function(config) {
       '**/*.html'   : ['html2js'],
       '**/*.json'   : ['json_fixtures']
     },
+
     jsonFixturesPreprocessor: {
       variableName: '__json__'
     },    
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
