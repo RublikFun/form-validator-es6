@@ -4,7 +4,7 @@
   "description": "A simple multi-panel user flow manager baked with simple form field validation and reporting",
   "main": "index.js",
   "directories": {
-    "test": "tests"
+    "lib": "storyboarder"
   },
   "scripts": {
     "test": "gulp karma",
@@ -20,7 +20,7 @@
     "type": "git",
     "url": "https://github.com/omadahealth/form-validator-es6.git"
   },
-  "author": "Stephen Standridge <stephen.standridge@omadahealth.com> (www.formisfunction.io)",
+  "author": "Stephen Standridge <stephen@formisfunction.io> (www.formisfunction.io)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/omadahealth/form-validator-es6/issues"
