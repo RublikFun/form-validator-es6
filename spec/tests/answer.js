@@ -1,4 +1,5 @@
 /* jshint ignore:start */
+
 describe('Answer', function(){
 	var testAnswer;
   beforeEach(function() {

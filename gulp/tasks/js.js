@@ -1,5 +1,5 @@
 var gulp    = require('gulp'),
-		config  = require('../config'),
+		config  = require('../config/tasks'),
 		babel   = require('gulp-babel'),
 		concat  = require('gulp-concat');
 

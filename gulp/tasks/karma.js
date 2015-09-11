@@ -2,31 +2,42 @@
 
 var gulp = require('gulp');
 var karma = require('karma');
-var notifier = require('node-notifier');
+var sysNotifier = require('../util/sysNotifier');
+var config = require('../config/karma.conf')
+var args = require('yargs').argv
+var karmaParseConfig = require('karma/lib/config').parseConfig;
 
-var karmaTask = function(done) {
-  var server = new karma.Server({
-    configFile: process.cwd() + '/karma.conf.js'
-  }, done);
+function runKarma( options, done ) {
+
+	var configFilePath = process.cwd() + '/gulp/config/karma.conf.js';
+
+	var config = karmaParseConfig(configFilePath, {});
+
+    Object.keys(options).forEach(function(key) {
+      config[key] = options[key];
+    });
+
+  var server = new karma.Server( config, done );	
   server.start();
-};
-var handleError = function(arg){
-	if( arg > 0 ){
-	  notifier.notify({
-	  	title: "Something Failed",
-	  	message: "sucking at something is the first step to being sort of good at something",
-	  	sound: 'Sosumi'	  	
-	  });
-	  return;
+
+}
+
+function processFile( file ){
+	var added = file || '*';
+			added += '.js';
+	var suite = [ 'spec/fixtures/**/*', 'dist/storyboarder.js', 'spec/tests/'+added ];
+	return suite;
+}
+function processRun( bool ){
+	if( bool == 'false' ){
+		return false;
 	}
-  notifier.notify({
-  	title: "All Tests Passed",
-  	message: "All tests passed! This is either really great or really bad.",
-  	sound: 'Purr'
-  });	
-};
+	return true;
+}
+
 gulp.task('karma', function(){
-	karmaTask(handleError);
+	runKarma({singleRun: processRun( args.single ), 
+						files: processFile( args.file ) }, sysNotifier);
 });
 
-module.exports = karmaTask;
+module.exports = runKarma;

@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: '../../',
     'plugins' : [
         'karma-jquery',
         'karma-mocha',
@@ -15,17 +15,14 @@ module.exports = function(config) {
         'karma-chrome-launcher',
         'karma-fixture',
         'karma-html2js-preprocessor',
-        'karma-json-fixtures-preprocessor'        
+        'karma-json-fixtures-preprocessor'
     ],
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: [ 'mocha', 'chai-jquery', 'jquery-1.8.3', 'sinon-chai', 'fixture' ],
+    frameworks: [ 'mocha', 'chai-jquery', 'jquery-1.8.3', 'sinon-chai', 'fixture'],
 
     // list of files / patterns to load in the browser
     files: [
-      './spec/fixtures/**/*',
-      './dist/storyboarder.js',
-      './spec/tests/*.js'
     ],
 
     // fixture preprocessing allows for both html and json fixtures
@@ -36,7 +33,7 @@ module.exports = function(config) {
 
     jsonFixturesPreprocessor: {
       variableName: '__json__'
-    },    
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -62,7 +59,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true,
+    singleRun: false,
     
     // Helps to address an issue on TravisCI where activity can time out
     browserNoActivityTimeout: 30000

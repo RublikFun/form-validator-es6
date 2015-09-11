@@ -2,7 +2,7 @@
 
 var gulp = require('gulp');
 var watch = require('gulp-watch');
-var config = require('../config');
+var config = require('../config/tasks');
 
 
 gulp.task('default', function() {
