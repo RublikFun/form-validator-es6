@@ -1,1 +1,1 @@
-module.exports = (function(){ return require('./dist/storyboarder.min') })();
+module.exports = require('./dist/storyboarder.min');

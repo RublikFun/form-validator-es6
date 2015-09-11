@@ -1,6 +1,6 @@
 {
   "name": "storyboarder",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A simple multi-panel user flow manager baked with simple form field validation and reporting",
   "main": "index.js",
   "directories": {
