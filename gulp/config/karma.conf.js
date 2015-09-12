@@ -1,3 +1,4 @@
+var env = require('../config/tasks');
 // Karma configuration
 // Generated on Fri Jan 23 2015 17:22:58 GMT-0500 (EST)
 
@@ -21,8 +22,10 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: [ 'mocha', 'chai-jquery', 'jquery-1.8.3', 'sinon-chai', 'fixture'],
 
-    // list of files / patterns to load in the browser
-    files: [
+    // list of files / patterns to load in the browser, grabs the concatenated js and fixture files by default.
+    files: [ 
+      'spec/fixtures/**/*', 
+      'dist/' + env.js.name
     ],
 
     // fixture preprocessing allows for both html and json fixtures

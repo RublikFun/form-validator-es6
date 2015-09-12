@@ -3,7 +3,6 @@
 var gulp = require('gulp');
 var karma = require('karma');
 var sysNotifier = require('../util/sysNotifier');
-var config = require('../config/karma.conf')
 var args = require('yargs').argv
 var karmaParseConfig = require('karma/lib/config').parseConfig;
 
@@ -14,7 +13,11 @@ function runKarma( options, done ) {
 	var config = karmaParseConfig(configFilePath, {});
 
     Object.keys(options).forEach(function(key) {
-      config[key] = options[key];
+    	if(key == 'files'){
+    		config[key].push(options[key]);
+    	}else{
+	      config[key] = options[key];    		
+    	}
     });
 
   var server = new karma.Server( config, done );	
@@ -25,7 +28,7 @@ function runKarma( options, done ) {
 function processFile( file ){
 	var added = file || '*';
 			added += '.js';
-	var suite = [ 'spec/fixtures/**/*', 'dist/storyboarder.js', 'spec/tests/'+added ];
+	var suite = 'spec/tests/'+added;
 	return suite;
 }
 function processRun( bool ){
