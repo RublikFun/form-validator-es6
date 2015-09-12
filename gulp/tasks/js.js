@@ -1,8 +1,6 @@
-var gulp    = require('gulp'),
-		config  = require('../config/tasks'),
-		babel   = require('gulp-babel'),
-		concat  = require('gulp-concat');
+'use strict';
+var gulp = require( 'gulp' );
 
-gulp.task('js', [ 'lint' ], function() {
-		gulp.start('preprocess');
+gulp.task( 'js', [ 'lint' ], function() {
+		gulp.start( 'preprocess' );
 });
