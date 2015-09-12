@@ -14,4 +14,9 @@ module.exports = {
     name: 'storyboarder.min.js',
     dest: './dist'
   },
+  karma: {
+    config: '/gulp/config/karma.conf.js',
+    tests: 'spec/tests/',
+    fixtures: 'spec/fixtures/',
+  },
 };

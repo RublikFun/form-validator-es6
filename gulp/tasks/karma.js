@@ -1,14 +1,14 @@
 'use strict';
-
+var env = require('../config/tasks').karma;
 var gulp = require('gulp');
 var karma = require('karma');
+var args = require('yargs').argv;
 var sysNotifier = require('../util/sysNotifier');
-var args = require('yargs').argv
 var karmaParseConfig = require('karma/lib/config').parseConfig;
 
 function runKarma( options, done ) {
 
-	var configFilePath = process.cwd() + '/gulp/config/karma.conf.js';
+	var configFilePath = process.cwd() + env.config;
 
 	var config = karmaParseConfig(configFilePath, {});
 
@@ -28,11 +28,11 @@ function runKarma( options, done ) {
 function processFile( file ){
 	var added = file || '*';
 			added += '.js';
-	var suite = 'spec/tests/'+added;
+	var suite = env.tests + added;
 	return suite;
 }
 function processRun( bool ){
-	if( bool == 'false' ){
+	if( bool === 'false' ){
 		return false;
 	}
 	return true;

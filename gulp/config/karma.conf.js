@@ -24,7 +24,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser, grabs the concatenated js and fixture files by default.
     files: [ 
-      'spec/fixtures/**/*', 
+      env.karma.fixtures + '/**/*', 
       'dist/' + env.js.name
     ],
 
