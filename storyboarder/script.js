@@ -5,7 +5,7 @@ var Script = function( container, auto=true ) {
 	this.scenes      = [];
 	this.current     = 0;
 	if( auto ){
-		this.autoInit();
+		this.init();
 	}
 	return this;
 };
@@ -31,25 +31,29 @@ Script.prototype = {
 		this.answers = answers || new Answers();
 		return this;
 	},
-	init : function init(){
+	makeScenes : function makeScenes( opts ){
+		if( this.answers !== undefined ){
+			opts.answers = this.answers;
+		}
 		var self = this;
 		this.container.find( this.sceneClass ).each( function(){
-			self.addScene( $( this ) );
+			self.addScene( $( this ), opts );
 		} );
-		this.start();
+		return this
 	},
-	autoInit : function autoInit( opts = {} ){
-		this.setFinished( opts.onFinished, opts.arguments )
+	init : function init( opts = {} ){
+		this.setFinished( opts.onFinished, opts.onFinishedArgs )
 				.setScene( opts.scene )
 				.setButton( opts.button )
 				.setAnswer( opts.answer )
 				.setAnswers( opts.answers )
-				.init();
+				.makeScenes( opts )
+				.start();
 	},
 
 	addScene : function addScene( el, opts ){
 		let scene = new Scene( el );
-		scene.autoInit( opts );
+		scene.init( this, opts );
 		this.scenes.push( scene );
 	},
 	removeScene : function removeScene(){
@@ -59,7 +63,7 @@ Script.prototype = {
 
 	addAt : function addAt( index, el, opts ){
 		let scene = new Scene( el );
-		scene.autoInit( opts );
+		scene.init( this, opts );
 		this.scenes.splice( index, 0, scene );
 	},
 	removeAt : function removeAt( index ){

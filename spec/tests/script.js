@@ -8,7 +8,54 @@ describe('Script', function(){
   afterEach(function(){
     testScript = {};  	
   	fixture.cleanup();
-  }) 
+  })
+  describe('#init', function(){
+  	it('should initialize the script without any options', function(){
+  		testScript.init()
+  		expect(testScript.answerClass).to.equal('.js-answer')
+  		expect(testScript.buttonClass).to.equal('.js-button')
+  		expect(testScript.sceneClass).to.equal('.js-scene')
+  		expect(testScript.current).to.equal(0)
+  		expect(testScript.container).to.have.class('started')
+  	})  	
+  	it('should make the scenes with their dom elements', function(){
+  		testScript.init()
+  		expect( testScript.scenes[ 0 ].container[ 0 ] ).to.equal( $( testScript.sceneClass )[ 0 ] )
+  	})
+  	describe('with options', function(){
+			var newScript = {};
+			var callback = {};  		
+  		beforeEach(function(){
+		    newScript = new Script( $('.test-script'), false );  	  		
+		    callback = function(){
+		    	this.hello = this.args
+		    };  		
+	  		newScript.init({
+	  			onFinished: callback,
+	  			callback: callback,
+	  			onFinishedArgs: 'hello',
+	  			callbackArgs: 'goodbye',
+	  			button: '.test-button',
+	  			answer: '.test-answer'
+	  		})
+  		})
+  		afterEach(function(){
+  			newScript = {};
+  		})
+	  	it('should enable override the script configuration', function(){
+	  		expect(newScript.answerClass).to.equal('.test-answer')
+	  		expect(newScript.buttonClass).to.equal('.test-button')
+	  		expect(newScript.onFinished).to.equal(callback)
+	  		expect(newScript.args).to.equal('hello')
+ 	  	})
+	  	it('should enable override the scene configuration', function(){
+	  		expect(newScript.scenes[0].answerClass).to.equal('.test-answer')
+	  		expect(newScript.scenes[0].callback).to.equal(callback)
+	  		expect(newScript.scenes[0].args).to.equal('goodbye')	  		
+	  	}) 	  	
+  	})
+ 	
+  })
 	describe("#addScene", function(){
 		it("should add a scene to the end of the flow", function(){
 	    expect(testScript.scenes.length).to.eq(2)
@@ -31,7 +78,7 @@ describe('Script', function(){
 
 	    expect(testScript.scenes[0].hello).to.eq('hello')
 		})
-	})	
+	})
 	describe("#addAt", function(){
 		it("should add a scene at the index", function(){
 	    expect(testScript.scenes.length).to.eq(2)

@@ -6,44 +6,45 @@ var Scene = function( klass ){
 	return this;
 };
 Scene.prototype = {
-	setCallback : function setCallback( callback, args ){
-		this.callback = callback || false;
-		this.args = args || false;
+	setCallback : function setCallback( callback=false, args=false ){
+		this.callback = callback;
+		this.args = args;
 		return this;
 	},
 	setScript : function setScript( script ){
 		this.script = script || undefined;
 		return this;
 	},
-	setButton : function setButton( klass ){
+	setButton : function setButton( klass='.js-button' ){
 		this.button = this.findButton( klass );
 		return this;
 	},
-	setAnswer : function setAnswer( klass ){
-		this.answerClass = klass || '.js-answer';
+	setAnswer : function setAnswer( klass='.js-answer' ){
+		this.answerClass = klass;
 		return this;
 	},
-	init : function init(){
+	bindClicks : function bindClicks(){
 		var self = this;
-		this.createAnswers();
 		this.button.each(function(){
 			self.bindClick($(this));
 		});
 	},
-	autoInit : function autoInit( opts={} ){
-		this.setCallback( opts.callback, opts.arguments )
-				.setScript( opts.script )
+	init : function init( script, opts={} ){
+		this.setCallback( opts.callback, opts.callbackArgs )
+				.setScript( script )
 				.setButton( opts.button )
 				.setAnswer( opts.answer )
-				.init();
+				.createAnswers()
+				.bindClicks();
 	},
 	createAnswers : function createAnswers(){
 		if(this.script === undefined){
 			this.answer = new Answer(this.container.find(this.answerClass));
-			return true;
+			return this;
 		}
 		var answerEl = this.container.find(this.answerClass);
 		this.answer = this.script.answers.createAnswer( answerEl );
+		return this
 	},
 	findButton : function findButton(buttonClass){
 		if(buttonClass !== undefined){
