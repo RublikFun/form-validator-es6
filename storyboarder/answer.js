@@ -7,7 +7,7 @@ var Answer = function(container){
 	this.container   = container;
 	this.value       = {};
 	this.validations = [];
-	this.init();	
+	this.init();
 };
 Answer.prototype = {
 	init: function init(){
@@ -38,7 +38,7 @@ Answer.prototype = {
 		var self = this;
 		$(this.container).each(function(){
 			self.ranges[$(this).data('field')] = {
-				max: $(this).data('max') || false, 
+				max: $(this).data('max') || false,
 				min: $(this).data('min') || false
 			};
 		});
@@ -72,7 +72,7 @@ Answer.prototype = {
 	},
 	setCallbackChange: function setCallbackChange(els){
 		var self = this, elementsToBind;
-		elementsToBind = els.filter(function(){	
+		elementsToBind = els.filter(function(){
 			if(self.hasField(this)){
 				return this;
 			}
@@ -80,16 +80,16 @@ Answer.prototype = {
 		$(elementsToBind).on( 'change', function(){
 				self.formatValue();
 			});
-	},	
+	},
 	unsetChange: function unsetChange(els){
 		var self = this, elementsToBind;
-		elementsToBind = els.filter(function(){	
+		elementsToBind = els.filter(function(){
 			if(self.hasField(this)){
 				return this;
 			}
 		});
 		$(elementsToBind).off('change');
-	},		
+	},
 	callbackCheck: function callbackCheck(){
 		var self = this;
 		$(this.container).each(function(){
@@ -102,10 +102,10 @@ Answer.prototype = {
 		$(this.container).each(function(){
 			if(reset){
 				self.clearValue($(this));
-			}					
+			}
 			self.trackValue( $(this) );
 		});
-	},	
+	},
 	trackValue: function trackValue(el){
 		var key = el.data('grouping');
 		if(key !== undefined){
@@ -121,14 +121,14 @@ Answer.prototype = {
 	formattedValue: function formattedValue(el){
 		var val = {};
 		var key = el.data( 'field' );
-				val[ key ] = this.getDefault( el );		
+				val[ key ] = this.getDefault( el );
 		if( this.hasValue(el) ){
 			val[ key ] = this.getValueOrDefault( el );
 			this.removeError( key );
 			return val;
 		}
 		if( this.shouldOverwrite( el ) ){
-			val[ key ] = this.getDefault( el );					
+			val[ key ] = this.getDefault( el );
 			return val;
 		}
 		return;
@@ -174,7 +174,7 @@ Answer.prototype = {
 	},
 	revertCallback: function revertCallback( el ){
 		var callbackElement = $( '.' + el.data( 'callback' ) );
-		if( callbackElement.length > 0 ){		
+		if( callbackElement.length > 0 ){
 			this.clearValue( callbackElement );
 			this.removeAnswer( callbackElement );
 			callbackElement.removeClass( 'active' );
@@ -183,13 +183,13 @@ Answer.prototype = {
 
 
 	hasValue: function hasValue(container){
-		return this.isValidInput(container) || 
+		return this.isValidInput(container) ||
 					 this.isValidCheckbox(container) ||
 					 this.isValidSelect(container);
 	},
 	shouldOverwrite: function shouldOverwrite(el){
-		return ( this.isDuplicate(el) && 
-						 this.isFirst(el) ) || 
+		return ( this.isDuplicate(el) &&
+						 this.isFirst(el) ) ||
 						!this.isDuplicate(el);
 	},
 	isDuplicate: function isUnique(el){
@@ -206,18 +206,18 @@ Answer.prototype = {
 		el.find('option').prop('selected', false);
 	},
 	hasField: function hasField( el ){
-		if ($(el).data('field')) { 
+		if ($(el).data('field')) {
 			return true;
 		}
 		return false;
 	},
 
 	addError: function addError(answer){
-		$('[data-field="'+answer+'"]').addClass('js-error');
+		$('[data-field="'+answer+'"]').addClass('js-error').addClass('error');
 	},
 	removeError: function removeError(answer){
-		$('[data-field="'+answer+'"]').removeClass('js-error');
-	},	
+		$('[data-field="'+answer+'"]').removeClass('js-error').removeClass('error');
+	},
 
 
 	isValid: function isValid(){
@@ -242,10 +242,10 @@ Answer.prototype = {
 		return groupIsValid;
 	},
 	checkIndividualValidity: function checkIndividualValidity(key, value){
-			var fieldIsValid = this.validatePresence(key, value) && 
+			var fieldIsValid = this.validatePresence(key, value) &&
 												 this.validateContent(key, value);
 			if(fieldIsValid){
-				this.removeError(key);		
+				this.removeError(key);
 			}
 			return fieldIsValid;
 	},
@@ -259,10 +259,10 @@ Answer.prototype = {
 		return true;
 	},
 	validateContent: function validateContent(key, value){
-		if ( this.isNumericallyValid( key, value ) && 
+		if ( this.isNumericallyValid( key, value ) &&
 					this.isInRange( key, value ) ) {
 			return true;
-		}		
+		}
 		this.addError(key);
 		return false;
 	},
@@ -290,11 +290,11 @@ Answer.prototype = {
 		var hasRestrictions = this.restrictions !== undefined;
 		if( !hasRestrictions ){ return true; }
 		if( this.restrictions[key] === 'numeric' ){
-			return this.isNumeric( value );			
+			return this.isNumeric( value );
 		}
 		return true;
 	},
-	isNumeric: function isNumeric( value ){	
+	isNumeric: function isNumeric( value ){
 		if( isNaN( Number( value ) ) ){
 			return false;
 		}
@@ -312,7 +312,7 @@ Answer.prototype = {
 		if( !max ){
 			return true;
 		}
-		return this.isNumeric( value ) && value <= max;		
+		return this.isNumeric( value ) && value <= max;
 	},
 
 
@@ -321,19 +321,19 @@ Answer.prototype = {
 	},
 	isInRange: function isInRange(key, value){
 		if(this.ranges[key] === undefined){ return true; }
-		return this.isAbove(key, value) && 
+		return this.isAbove(key, value) &&
 					 this.isBelow(key, value);
 	},
 
 	addAnswer: function addAnswer(container){
 		this.container = this.container.add(container);
-		this.setCallbackChange(container);		
+		this.setCallbackChange(container);
 		this.setRanges();
 		this.setRequired();
 	},
 	removeAnswer: function removeAnswer(container){
 		this.container = this.container.not(container);
-		this.unsetChange(container);				
+		this.unsetChange(container);
 		this.setRanges();
 		this.required = {};
 		this.setRequired();

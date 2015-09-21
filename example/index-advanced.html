@@ -1,34 +1,192 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="example.css">
+</head>
+<body>
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="../dist/storyboarder.js"></script>
+  <div class="form-container">
+    <div class="report-area">
+      <p class="report-text">values reported:</p>
+      <div class="js-report-area">
+        {"answer-intro":"",<br>
+          "required-test":"",<br>
+          "required-test2":"",<br>
+          "max-test":"",<br>
+          "min-test":"",<br>
+          "max-min-test":"",<br>
+          "numeric-test":"",<br>
+          "select-test":"",<br>
+          "check-test1":"",<br>
+          "check-test2":"",<br>
+          "check-test-linked":"",<br>
+          "radio-test":"",<br>
+          "radio-test-alt":""}
+      </div>
+    </div>
+    <div class="js-scenes-container">
+      <div class="script-footer">
+         <h3>Advanced Storyboarder</h3>
+      </div>
 
       <div class="js-scene">
-          <label for="hidden-test1">Does not reveal field</label>      
+        <h3>Setting the Storyboarder's onFinished callback</h3>
+        <ul>
+          <li>The storyboarder can have an onFinished function</li>
+          <li>The Storyboarder can have arguments passed to the onFinished function</li>
+          <li>The onFinished function is called once all scenes have been completed with the onFinished arguments</li>
+          <li>The onFinished arguments can be a function (bound to the right context) that the Storyboarder will call</li>
+        </ul>
+        <p>There are two ways to set the onFinished callback:</p>
+        <ul>
+          <li>With the setOnFinished method (auto initialized)</li>
+          <li>Passing arguments to the init method.</li>
+        </ul>
+        <h3>#setOnFinished(func, args)</h3>
+        <code>
+          var callback = function(arg){<br>
+            &nbsp; console.log(arg)<br>
+          }<br>
+          var storyboard = new Storyboarder();<br>
+          storyboarder.setOnFinished(callback, 'hello')<br>
+          //Will log hello
+        </code><br>
+
+        <h3>#init({onFinished: func, onFinishedArgs: args})</h3>
+        <code>
+          var callback = function(arg){<br>
+            &nbsp; console.log(arg)<br>
+          }<br>
+          var storyboard = new Storyboarder(false, false);<br>
+          storyboarder.init({onFinished: callback, onFinishedArgs: 'hello'})<br>
+          //Will log hello
+        </code><br>
+
+        <button class="js-button">
+          next
+        </button>
+      </div>
+
+      <div class="js-scene">
+        <h3>Setting the scenes' callback</h3>
+        <ul>
+          <li>Each scene can call a callback function</li>
+          <li>Each scene can have arguments passed to its callback function</li>
+          <li>The callback function is called once all the scene's answers are valid and before the next scene is activated</li>
+          <li>The callback arguments can be a function (bound to the right context) that the scene will call</li>
+        </ul>
+        <p>There are two ways to set the scene callback:</p>
+        <ul>
+          <li>With the addCallbackToScene method (auto initialized)</li>
+          <li>Passing an argument to the init method.</li>
+        </ul>
+        <h3>#addCallbackToScene(index, func, args)</h3>
+        <code>
+          var callback = function(arg){<br>
+            &nbsp; console.log(arg)<br>
+          }<br>
+          var storyboard = new Storyboarder();<br>
+          storyboarder.addCallbackToScene( 0, callback, 'hello')<br>
+          //Will log hello before the first scene is deactivated
+        </code><br>
+
+        <h3>#init({ callback: func, args: args })</h3>
+        <code>
+          var callback = function(arg){<br>
+            &nbsp; console.log(arg)<br>
+          }<br>
+          var storyboard = new Storyboarder(false, false);<br>
+          storyboarder.init({callback: callback, callbackArgs: 'hello'})<br>
+          //Will log hello before every scene is deactivated
+        </code><br>
+
+        <button class="js-button">
+          next
+        </button>
+      </div>
+
+
+      <div class="js-followup">
+        <p>That covers the basic functionality, click the link below to find out about the advanced functionality including initializing with options, multidimensional answers, storyboarder callbacks, scene callbacks, and answer callbacks. </p>
+        <a href="index-advanced.html"> Advance </a>
+      </div>
+  </div>
+
+
+
+
+  <script type="text/javascript">
+    var testScript = new Script($('.js-scenes-container'), false)
+        testScript.init({ onFinished: showFollowUp, callback: showReport, callbackArgs: testScript.answers.report.bind(testScript.answers)})
+    testScript.start();
+    // testScript.addAt(1, $('.js-additional-scene'), showReport, testScript.answers.report.bind(testScript.answers));
+    function showReport(val){
+      var broken = JSON.stringify(val).replace(new RegExp(',', 'g'), ',<br>');
+      $('.js-report-area').html(broken)
+    }
+    function showFollowUp(){
+      $('.js-followup').addClass('active')
+    }
+    function addAdditionalandReport(val){
+      showReport(val);
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="js-scene">
+          <label for="hidden-test1">Does not reveal field</label>
           <input type="checkbox" id="hidden-test1" class="js-answer" name="reveal-field" value="hidden-test1" data-field="reveal-field" data-required="false">
           <br>
-          <label for="hidden-test2">Reveals field</label>      
+          <label for="hidden-test2">Reveals field</label>
           <input id="hidden-test2" type="checkbox" class="js-answer" name="reveal-field" value="hidden-test2" data-field="reveal-field" data-callback="js-callback" data-required="false">
           <br>
-          <label for="hidden-test3">HIdden Field</label>      
-          <input id="hidden-test3" type="text" class="js-callback hidden" data-field="hidden-field" >     
+          <label for="hidden-test3">HIdden Field</label>
+          <input id="hidden-test3" type="text" class="js-callback hidden" data-field="hidden-field" >
          <div class="js-button">next</div>
-      </div>  
+      </div>
 
       <div class="js-scene">
         <!-- multidimensional and mixed answers -->
           <label for="grouped-text">Grouped Text Field</label>
           <input id="grouped-text" type="text" class="js-answer" data-field="mixed-test1" data-grouping="testgroup">
           <br>
-          <label for="grouped-select">Grouped Select Field</label>          
+          <label for="grouped-select">Grouped Select Field</label>
           <select class="js-answer" data-field="mixed-test2" data-grouping="testgroup">
             <option value="">---</option>
             <option value="mixed-test-select-1">Mixed Test value 1</option>
             <option value="mixed-test-select-2">Mixed Test value 2</option>
-          </select>        
+          </select>
           <br>
-          <label for="ungrouped-check1">Un-Grouped  Checkbox1</label>                    
+          <label for="ungrouped-check1">Un-Grouped  Checkbox1</label>
           <input id="ungrouped-check1" type="checkbox" class="js-answer" name="mixed-test4" value="mixed-test-check-1" data-field="mixed-test-check-1"><br>
-          <label for="ungrouped-check2">Un-Grouped  Checkbox2</label>                              
-          <input id="ungrouped-check2" type="checkbox" class="js-answer" name="mixed-test4" value="mixed-test-check-2" data-field="mixed-test-check-2">       
+          <label for="ungrouped-check2">Un-Grouped  Checkbox2</label>
+          <input id="ungrouped-check2" type="checkbox" class="js-answer" name="mixed-test4" value="mixed-test-check-2" data-field="mixed-test-check-2">
         <div class="js-button">next</div>
-      </div> 
+      </div>
 
 
     <div class="js-additional-scene">
@@ -37,6 +195,6 @@
       <input id="additional-required" type="text" class="js-answer" data-field="additional-test-1" >
       <br>
       <label for="additional-notrequired">unrequired field added to flow:</label>
-      <input id="additional-notrequired" type="text" class="js-answer" data-field="additional-test-2" data-required="false">     
+      <input id="additional-notrequired" type="text" class="js-answer" data-field="additional-test-2" data-required="false">
       <div class="js-button">next</div>
-    </div>  
+    </div>

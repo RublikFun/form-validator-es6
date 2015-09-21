@@ -53,19 +53,19 @@ Scene.prototype = {
 		return this.container.find('.js-button');
 	},
 	show : function show(){
-		this.container.addClass('active');
+		this.container.addClass('active').addClass('js-active');
 	},
 	hide : function hide(){
-		this.container.removeClass('active');
+		this.container.removeClass('active').removeClass('js-active');
 	},
 	shake : function shake(){
-		this.container.addClass('js-error');
+		this.container.addClass('js-error').addClass('error');
 	},
 	unshake : function unshake(){
-		this.container.removeClass('js-error');
+		this.container.removeClass('js-error').removeClass('error');
 	},
 	handleCallback: function handleCallback() {
-		var args = typeof this.args === 'function' ? 
+		var args = typeof this.args === 'function' ?
 				this.args() : this.args;
 
 		if ( this.callback) {

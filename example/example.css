@@ -12,19 +12,19 @@
     .js-scene.active, .js-additional-scene.active, .js-followup.active{
       display: block;
     }
-    .js-scene.error, .js-additional-scene.error{
+    .js-scene.js-error, .js-additional-scene.js-error{
       background: yellow;
     }
-    .js-answer.error{
+    .js-answer.js-error{
       background: red;
-    } 
+    }
     .js-button{
       padding: 20px;
       background: #cccccc;
       border-radius: 15px;
       cursor: pointer;
       margin-top: 20px;
-    }  
+    }
     .report-area{
       height: 700px;
       margin: auto;
@@ -36,7 +36,7 @@
       background: white;
     }
     .js-report-area{
-      width: 200px;      
+      width: 200px;
       background: white;
       padding: 10px 20px;
     }

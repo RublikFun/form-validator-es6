@@ -6,11 +6,14 @@ var Script = function( container, auto=true ) {
 	this.current     = 0;
 	this.answers     = new Answers();
 	if( auto ){
-		this.init().start();
+		this.init();
 	}
 	return this;
 };
 Script.prototype = {
+	report: function report(){
+		return this.answers.report();
+	},
 	setFinished : function setFinished( onFinished, args ){
 		this.onFinished = onFinished  || false;
 		this.args = args || false;
@@ -43,8 +46,8 @@ Script.prototype = {
 				.setScene( opts.scene )
 				.setButton( opts.button )
 				.setAnswer( opts.answer )
-				.makeScenes( opts );
-		return this;
+				.makeScenes( opts )
+				.start();
 	},
 
 	addScene : function addScene( el, opts ){

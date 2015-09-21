@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="example.css">  
+  <link rel="stylesheet" href="example.css">
 </head>
 <body>
   <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -27,99 +27,302 @@
     </div>
     <div class="js-scenes-container">
       <div class="script-footer">
-         <p> This is the main script container. <br>The script can be any dom element. <br> By default the script will look for the '.js-script' class. <br> You can pass it any classname to override the default.<br> The script should filled with scenes. </p> 
-      </div>    
-      <div class="js-scene">
-        <p>This is a scene container.<br> Scenes can be any dom element.<br> By default the script will look for the '.js-scene' class.<br>It will make a navigation flow through the scenes as they appear in the dom.</p>
-        <div class="js-button">
-          <p>This is a button container. Buttons are linked to the navigation. They finish the scene when clicked, which prompts the script to move to the next scene.<br> Buttons can be any dom element.<br> By default the scene will look for the '.js-button' class.</p>
-        </div>
+         <h3>Basic Storyboarder</h3>
+
       </div>
+
       <div class="js-scene">
-        <p>This is the next Scene, which contains the script's first answer. By default, the scene will look for a '.js-answer' class. <br> Answers can be configured by many data attributes.<br> The most essential attribute is the data-field.<br> The data-field is used for three things: To structure the reported object, to link similar answers ( checkboxes ) and to validate fields<br>Answers will block the forward flow of the script until they're answered.<br> Answers must be input fields with a type. </p>
-        <p class="error-text">Invalid inputs are reported two ways: on the scene and on the invalid input. Both of these elements will receive an error.<br> They will both receive a '.js-error' class.<br> The input's error class is removed as soon as the input is valid<br> the scene's error class is removed as soon as all its answers are valid and the user clicks next. </p>
-        <input type="text" class="js-answer" data-field="answer-intro">
-        <div class="js-button"> <p>Next</p> </div>
-      </div>
-      <div class="js-scene">
-        <p>This scene shows that answers don't have to be required.<br> The default behavior is to require all answers.<br> You can override this default with a data-required="false" on the anwer element.<br> You can mixed required and non-required answers on a scene.</p>
-        <label for="required-test1">Not Required</label>        
-        <input id="required-test1" type="text" class="js-answer" name="required-test" data-field="required-test" data-required="false" ><br>
-        <p class="error-text">
-          Only the required answer and the script will receive an error class.
-        </p>
-        <label for="required-test2">Required</label>        
-        <input id="required-test2" type="text" class="js-answer" name="required-test" data-field="required-test2" >        
-
-        <div class="js-button"> Next </div>
-      </div>
-      <div class="js-scene">
-        <p>This scene shows that answers can be required to be a number and have a max/min value on it.<br> The max and min data attributes will automagically force the field to be a number.<br> The numeric data attribute will just ensure that the answer is a number.<br>An answer doesn't need both a max and a min.</p>
-        <label for="max-test">Max = 100</label>        
-        <input id="max-test" type="text" class="js-answer" name="max-test" data-field="max-test" data-max="100"><br>
-
-        <label for="min-test">Min = 100</label>        
-        <input id="min-test" type="text" class="js-answer" name="min-test" data-field="min-test" data-min="100"><br>  
-
-        <label for="max-min-test">Max = 100, Min = 50</label>        
-        <input id="max-min-test" type="text" class="js-answer" name="max-min-test" data-field="max-min-test" data-max="100" data-min="50"><br>
-
-        <label for="numeric-test">Numeric</label>        
-        <input id="numeric-test" type="text" class="js-answer" name="numeric-test" data-field="numeric-test" data-numeric="true"><br> 
-
-        <div class="js-button"> Next </div>
-      </div>                      
-      <div class="js-scene">
-        <p>This scene shows that answers can select boxes.<br> The '.js-answer' class must go on the select and not the option.</p>      
-        <!-- select inputs -->
-        <label for="select-test">Select Test</label>
-        <select id="select-test" class="js-answer" data-field="select-test">
-          <option value="">----</option>      
-          <option value="select-test1">Test 1</option>
-          <option value="select-test2">Test 2</option>
-        </select>
-        <div class="js-button">next</div>
-      </div>          
-      <div class="js-scene">
-        <p>This scene shows that answers can checkboxes.<br> The key to successfully working with checkboxes is where you put the data-field attribute.</p>
-        <!-- check inputs -->
-        <label for="check-test1">Value: true (required)</label><br> 
-        <input type="checkbox" id="check-test1" class="js-answer" name="check-test1" value="true" data-field="check-test1"> check test 1<br>
-
-        <label for="check-test2">Value: true (not required)</label><br> 
-        <input type="checkbox" id="check-test2" class="js-answer" name="check-test2" value="true" data-field="check-test2" data-required="false"> check test 2<br> 
-
-        <label for="check-test3">Value: foo (only 1 is required)</label><br>   
-        <input type="checkbox" id="check-test3" class="js-answer" name="check-test3" value="bar" data-field="check-test-linked"> check test 3<br>
-
-        <label for="check-test3">Value: bar (only 1 is required)</label><br>
-        <input type="checkbox" id="check-test3" class="js-answer" name="check-test3" value="foo" data-field="check-test-linked"> check test 4<br>   
-        <div class="js-button">next</div>
-      </div> 
-      <div class="js-scene">
-        <!-- inputs that aren't required -->
-        <p>This scene shows that answers can radios.<br> Storyboarder will not override any default radio behavior.<br> It assumes that you correctly structure your radios to reflect the toggle functionality you desire.<br> The key to successfully working with radios is where you put the data-field attribute.</p>        
-        <label for="radio-test1">Value: Test1</label>
-        <input type="radio" id="radio-test1" class="js-answer" name="radio-test" data-field="radio-test" value="test1"><br>
+        <h3>Storyboarder dom:</h3>
+        <code>
+          &lt;div class=&quot;js-storyboarder&quot;&gt;<br/>
+          &nbsp;&lt;div class=&quot;js-scene js-active active&quot;&gt;<br/>
+          &nbsp; &nbsp;&lt;div class=&quot;js-button&quot;&gt;<br/>
+          &nbsp; &nbsp; &nbsp;next<br/>
+          &nbsp; &nbsp;&lt;/div&gt;<br/>
+          &nbsp;&lt;/div&gt;<br/>
+          &nbsp;&lt;div class=&quot;js-scene&quot;&gt;<br/>
+          &nbsp; &nbsp;&lt;div class=&quot;js-button&quot;&gt;<br/>
+          &nbsp; &nbsp; &nbsp;next<br/>
+          &nbsp; &nbsp;&lt;/div&gt;<br/>
+          &nbsp;&lt;/div&gt;<br/>
+          &lt;/div&gt;
+        </code><br>
         <br>
-        <label for="radio-test2">Value: Test2</label>        
-        <input type="radio" id="radio-test2" class="js-answer" name="radio-test" data-field="radio-test" value="test2"><br>
+        <h3>Storyboarder javascript incantation:</h3>
+        <code>
+          //Auto initialzed//
+          var storyboard = new Storyboarder();
 
-        <label for="radio-test3">Value: Test3(also required, but not linked)</label>        
-        <input type="radio" id="radio-test3" class="js-answer" name="radio-test-alt" data-field="radio-test-alt" value="test3"><br>
-        <div class="error-text">
-          You can break the storyboarder by making two radios that are are both required and tracked with different data-field attributes that are linked by default radio behavior.          
-        </div>
-        <div class="js-button">next</div>        
+          //With a dom element//
+          var storyboard = new Storyboarder($('.js-storyboarder'));
+
+          //Manually initialzed//
+          var storyboard = new Storyboarder($('.js-storyboarder'), false).init()
+        </code>
+        <h3> A basic Storyboarder.</h3>
+        <ul>
+          <li>A Storyboarder can be any dom element.</li>
+          <li>A Storyboarder is the parent element to all scenes.</li>
+          <li>By default the Storyboarder will look for the '.js-storyboarder' class.</li>
+          <li>You can pass it a queried dom element to override the default.</li>
+          <li>The Storyboarder should filled with scenes.</li>
+          <li>By default the Storyboarder will auto initialze.</li>
+          <li>To Disable the auto initialization, pass false as the second argument</li>
+        </ul>
+        <code>
+          &lt;div class=&quot;js-storyboarder&quot;&gt;<br/>
+          &lt;/div&gt;
+        </code>
+        <h3> A basic Scene.</h3>
+        <ul>
+          <li>Scenes can be any dom element.</li>
+          <li>Scenes are individual panels within a Storyboarder that can contain answers.</li>
+          <li>Scenes should each have a navigation button.</li>
+          <li>By default the storyboarder will look for the '.js-scene' class.</li>
+          <li>The storyboarder will make a navigation flow through the scenes as they appear in the dom.</li>
+          <li>The Storyboarder will add a 'js-active' and 'active' class to the scene when it is the current scene</li>
+          <li>The Storyboarder will remove a 'js-active' and 'active' class from the scene once the scene is valid and the user clicks the button</li>
+        </ul>
+        <code>
+          &lt;div class=&quot;js-scene&quot;&gt;<br/>
+          &lt;/div&gt;
+        </code>
+        <h3> A basic Button.</h3>
+        <ul>
+          <li>Buttons can be any dom element.</li>
+          <li>Buttons are linked to the navigation.</li>
+          <li>They finish the scene when clicked, which prompts the storyboarder to move to the next scene.</li>
+          <li>By default the scene will look for the '.js-button' class.</li>
+        </ul>
+        <code>
+         &lt;button class=&quot;js-button&quot;&gt;<br/>
+         &lt;/button&gt;<br/>
+        </code>
+        <button class="js-button">
+          next
+        </button>
       </div>
-      <div class="js-scene">
-        <!-- inputs that aren't required -->
-        <p>This scene shows answer reporting.</p>        
 
-        <div class="js-button">next</div>        
-      </div>      
+
+      <div class="js-scene">
+        <h3>A basic Answer</h3>
+        <ul>
+          <li>An answer is an input element with a type.</li>
+          <li>By default, the scene will look for a '.js-answer' class.</li>
+          <li>Answers can be configured by data attributes.</li>
+          <li>The most essential attribute is the data-field.</li>
+          <li>The data-field is used for three things:
+            <ul>
+              <li>To structure the reported object</li>
+              <li>To link similar answers ( checkboxes )</li>
+              <li>To validate fields</li>
+            </ul>
+          </li>
+        </ul>
+        <code>
+         &lt;input class=&quot;js-answer&quot; data-field=&quot;answer-intro&quot;&gt;<br/>
+        </code>
+        <h3>Answer Validation</h3>
+        <ul>
+          <li>Invalid inputs are reported two ways:
+            <ul>
+              <li>On the scene</li>
+              <li>On the invalid input</li>
+            </ul>
+          </li>
+          <li>Both of these elements will receive a 'js-error' and 'error' class.</li>
+          <li>The input's error classes are removed as soon as the input is valid.</li>
+          <li>The scene's error classes are removed as soon as all its answers are valid and the user clicks next.</li>
+          <li>The most essential attribute is the data-field.</li>
+        </ul>
+
+        <div>
+          <h4>Demo</h4>
+          <input type="text" class="js-answer" data-field="answer-intro">
+          <br>
+          <button class="js-button"> <p>Next</p> </button>
+        </div>
+      </div>
+
+
+      <div class="js-scene">
+        <h3>Ignoring Answer Validation</h3>
+        <ul>
+          <li>Answers don't have to be required.</li>
+          <li>The default behavior is to require all answers.</li>
+          <li>You can override this default with a data-required="false" on the anwer element.</li>
+          <li>You can mixed required and non-required answers on a scene.</li>
+          <li>Only the required answer and the scene will receive an error class</li>
+        </ul>
+
+        <code>
+         &lt;input class=&quot;js-answer&quot; data-field=&quot;required-test&quot; data-required=&quot;false&quot;&gt;<br/>
+         &lt;input class=&quot;js-answer&quot; data-field=&quot;required-test2&quot;&gt;<br/>
+        </code>
+
+        <div>
+          <h4>Demo</h4>
+
+          <label for="required-test1">Not Required</label>
+          <input id="required-test1" type="text" class="js-answer" name="required-test" data-field="required-test" data-required="false" ><br>
+
+          <label for="required-test2">Required</label>
+          <input id="required-test2" type="text" class="js-answer" name="required-test" data-field="required-test2" >
+          <br>
+          <button class="js-button"> Next </button>
+        </div>
+      </div>
+
+
+      <div class="js-scene">
+        <h3>Number Value Validation</h3>
+
+        <ul>
+          <li>Answers can be required to be a number and have a max/min value on it.</li>
+          <li>The max and min data attributes will automagically force the field to be a number.</li>
+          <li>The numeric data attribute will just ensure that the answer is a number.</li>
+          <li>An answer doesn't need both a max and a min.</li>
+        </ul>
+
+        <code>
+          &lt;input class=&quot;js-answer&quot; data-field=&quot;max-test&quot; data-max=&quot;100&quot;&gt; <br/>
+          &lt;input class=&quot;js-answer&quot; data-field=&quot;min-test&quot; data-min=&quot;100&quot;&gt; <br/>
+          &lt;input class=&quot;js-answer&quot; data-field=&quot;max-min-test&quot; data-max=&quot;100&quot; data-min=&quot;50&quot;&gt; <br/>
+          &lt;input class=&quot;js-answer&quot; data-field=&quot;numeric-test&quot; data-numeric=&quot;true&quot;&gt; <br/>
+        </code>
+
+        <div>
+          <h4>Demo</h4>
+
+          <label for="max-test">Max = 100</label>
+          <input id="max-test" type="text" class="js-answer" name="max-test" data-field="max-test" data-max="100"><br>
+
+          <label for="min-test">Min = 100</label>
+          <input id="min-test" type="text" class="js-answer" name="min-test" data-field="min-test" data-min="100"><br>
+
+          <label for="max-min-test">Max = 100, Min = 50</label>
+          <input id="max-min-test" type="text" class="js-answer" name="max-min-test" data-field="max-min-test" data-max="100" data-min="50"><br>
+
+          <label for="numeric-test">Numeric</label>
+          <input id="numeric-test" type="text" class="js-answer" name="numeric-test" data-field="numeric-test" data-numeric="true"><br>
+
+          <button class="js-button"> Next </button>
+        </div>
+      </div>
+
+
+
+      <div class="js-scene">
+        <h3>Select Element Answers</h3>
+        <ul>
+          <li>Answers can select boxes.</li>
+          <li>The '.js-answer' class must go on the select and not the option.</li>
+        </ul>
+        <code>
+          &lt;select id=&quot;select-test&quot; class=&quot;js-answer&quot; data-field=&quot;select-test&quot;&gt;<br/>
+          &nbsp; &lt;option value=&quot;&quot;&gt;----&lt;/option&gt;<br/>
+          &nbsp; &lt;option value=&quot;select-test1&quot;&gt;Test 1&lt;/option&gt;<br/>
+          &nbsp; &lt;option value=&quot;select-test2&quot;&gt;Test 2&lt;/option&gt;<br/>
+          &lt;/select&gt;<br/>
+        </code>
+        <div>
+          <h4>Demo</h4>
+          <label for="select-test">Select Test</label>
+          <select id="select-test" class="js-answer" data-field="select-test">
+            <option value="">----</option>
+            <option value="select-test1">Test 1</option>
+            <option value="select-test2">Test 2</option>
+          </select>
+          <br>
+          <button class="js-button">next</button>
+        </div>
+
+      </div>
+
+
+
+      <div class="js-scene">
+        <h3>Checkbox Element Answers</h3>
+        <ul>
+          <li>Answers can checkboxes..</li>
+          <li>The key to successfully working with checkboxes is where you put the data-field attribute.</li>
+        </ul>
+        <code>
+          &lt;input type=&quot;checkbox&quot; class=&quot;js-answer&quot; value=&quot;true&quot; data-field=&quot;check-test1&quot;&gt;<br/>
+          &lt;input type=&quot;checkbox&quot; class=&quot;js-answer&quot; value=&quot;true&quot; data-field=&quot;check-test2&quot; data-required=&quot;false&quot;&gt;<br/>
+          &lt;input type=&quot;checkbox&quot; class=&quot;js-answer&quot; value=&quot;bar&quot; data-field=&quot;check-test-linked&quot;&gt;<br/>
+          &lt;input type=&quot;checkbox&quot; class=&quot;js-answer&quot; value=&quot;foo&quot; data-field=&quot;check-test-linked&quot;&gt;
+        </code>
+        <div>
+          <h4>Demo</h4>
+          <label for="check-test1">Value: true (required)</label><br>
+          <input type="checkbox" id="check-test1" class="js-answer" name="check-test1" value="true" data-field="check-test1"> check test 1<br>
+
+          <label for="check-test2">Value: true (not required)</label><br>
+          <input type="checkbox" id="check-test2" class="js-answer" name="check-test2" value="true" data-field="check-test2" data-required="false"> check test 2<br>
+
+          <label for="check-test3">Value: foo (only 1 is required)</label><br>
+          <input type="checkbox" id="check-test3" class="js-answer" name="check-test3" value="bar" data-field="check-test-linked"> check test 3<br>
+
+          <label for="check-test3">Value: bar (only 1 is required)</label><br>
+          <input type="checkbox" id="check-test3" class="js-answer" name="check-test3" value="foo" data-field="check-test-linked"> check test 4<br>
+          <button class="js-button">next</button>
+        </div>
+      </div>
+
+
+      <div class="js-scene">
+        <h3>Radio Element Answers</h3>
+        <ul>
+          <li>Answers can radios.</li>
+          <li>Storyboarder will not override any default radio behavior.</li>
+          <li>It assumes that you correctly structure your radios to reflect the toggle functionality you desire.</li>
+          <li>The key to successfully working with radios is where you put the data-field attribute.</li>
+          <li>You can break the storyboarder by making two radios that are are both required and tracked with different data-field attributes that are linked by default radio behavior.</li>
+        </ul>
+        <code>
+          &lt;input type=&quot;radio&quot; class=&quot;js-answer&quot; data-field=&quot;radio-test&quot; value=&quot;test1&quot;&gt;<br/>
+          &lt;input type=&quot;radio&quot; class=&quot;js-answer&quot; data-field=&quot;radio-test&quot; value=&quot;test2&quot;&gt;<br/>
+          &lt;input type=&quot;radio&quot; class=&quot;js-answer&quot; data-field=&quot;radio-test-alt&quot; value=&quot;test3&quot;&gt;
+        </code>
+        <div>
+          <h4>Demo</h4>
+          <label for="radio-test1">Value: Test1</label>
+          <input type="radio" id="radio-test1" class="js-answer" name="radio-test" data-field="radio-test" value="test1"><br>
+          <label for="radio-test2">Value: Test2</label>
+          <input type="radio" id="radio-test2" class="js-answer" name="radio-test" data-field="radio-test" value="test2"><br>
+          <br>
+          <label for="radio-test3">Value: Test3(also required, but not linked)</label>
+          <input type="radio" id="radio-test3" class="js-answer" name="radio-test-alt" data-field="radio-test-alt" value="test3"><br>
+          <button class="js-button">next</button>
+        </div>
+      </div>
+
+
+      <div class="js-scene">
+        <h3>Storyboarder Reporting</h3>
+        <ul>
+          <li>Answers are reported in a json-like object.</li>
+          <li>By default, answers are a single-dimensional value only.</li>
+          <li>The data-field attribute determines the key.</li>
+          <li>For checkboxes, radios, and selects, the value reported is the value attribute of the option selected.</li>
+          <li>For inputs, the value reported is the text within the field.</li>
+          <li>To print, use the Storyboarder.report mehtod.</li>
+        </ul>
+        <h3>Javascript Incantation</h3>
+        <code>
+          var storyboard = new Storyboarder();<br>
+          &lt;!-- user goes through storyboard --&gt;<br>
+          storyboard.report();
+        </code>
+        <br>
+        <br>
+        <button class="js-button">next</button>
+      </div>
+
+
       <div class="js-followup">
-        <p>That covers the basic functionality, click the link below to find out about the advanced functionality including initializing with options, answer grouping, script callbacks, scene callbacks, and answer callbacks. </p>
+        <p>That covers the basic functionality, click the link below to find out about the advanced functionality including initializing with options, multidimensional answers, storyboarder callbacks, scene callbacks, and answer callbacks. </p>
         <a href="index-advanced.html"> Advance </a>
       </div>
   </div>
@@ -130,7 +333,7 @@
   <script type="text/javascript">
     var testScript = new Script($('.js-scenes-container'), false)
         testScript.init({ onFinished: showFollowUp, callback: showReport, callbackArgs: testScript.answers.report.bind(testScript.answers)})
-    testScript.start();
+
     // testScript.addAt(1, $('.js-additional-scene'), showReport, testScript.answers.report.bind(testScript.answers));
     function showReport(val){
       var broken = JSON.stringify(val).replace(new RegExp(',', 'g'), ',<br>');
