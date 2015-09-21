@@ -1,0 +1,42 @@
+
+      <div class="js-scene">
+          <label for="hidden-test1">Does not reveal field</label>      
+          <input type="checkbox" id="hidden-test1" class="js-answer" name="reveal-field" value="hidden-test1" data-field="reveal-field" data-required="false">
+          <br>
+          <label for="hidden-test2">Reveals field</label>      
+          <input id="hidden-test2" type="checkbox" class="js-answer" name="reveal-field" value="hidden-test2" data-field="reveal-field" data-callback="js-callback" data-required="false">
+          <br>
+          <label for="hidden-test3">HIdden Field</label>      
+          <input id="hidden-test3" type="text" class="js-callback hidden" data-field="hidden-field" >     
+         <div class="js-button">next</div>
+      </div>  
+
+      <div class="js-scene">
+        <!-- multidimensional and mixed answers -->
+          <label for="grouped-text">Grouped Text Field</label>
+          <input id="grouped-text" type="text" class="js-answer" data-field="mixed-test1" data-grouping="testgroup">
+          <br>
+          <label for="grouped-select">Grouped Select Field</label>          
+          <select class="js-answer" data-field="mixed-test2" data-grouping="testgroup">
+            <option value="">---</option>
+            <option value="mixed-test-select-1">Mixed Test value 1</option>
+            <option value="mixed-test-select-2">Mixed Test value 2</option>
+          </select>        
+          <br>
+          <label for="ungrouped-check1">Un-Grouped  Checkbox1</label>                    
+          <input id="ungrouped-check1" type="checkbox" class="js-answer" name="mixed-test4" value="mixed-test-check-1" data-field="mixed-test-check-1"><br>
+          <label for="ungrouped-check2">Un-Grouped  Checkbox2</label>                              
+          <input id="ungrouped-check2" type="checkbox" class="js-answer" name="mixed-test4" value="mixed-test-check-2" data-field="mixed-test-check-2">       
+        <div class="js-button">next</div>
+      </div> 
+
+
+    <div class="js-additional-scene">
+      <!-- added inputs, required and not -->
+      <label for="additional-required">required field added to flow:</label>
+      <input id="additional-required" type="text" class="js-answer" data-field="additional-test-1" >
+      <br>
+      <label for="additional-notrequired">unrequired field added to flow:</label>
+      <input id="additional-notrequired" type="text" class="js-answer" data-field="additional-test-2" data-required="false">     
+      <div class="js-button">next</div>
+    </div>  

@@ -22,15 +22,15 @@ describe('Scene', function(){
 		it("should add the error class to the element if answer is invalid", function(){
 			testScene.answer.container.trigger('change')
 			testScene.button.trigger('click');
-			expect( testScene.container ).to.have.class('error')
+			expect( testScene.container ).to.have.class('js-error')
 		})		
 		it("should remove the error class from the dom element if answer is valid", function(){
 			testScene.button.trigger('click');			
-			expect(testScene.container).to.have.class('error')
+			expect(testScene.container).to.have.class('js-error')
 			testScene.answer.container.val('test')
 			testScene.answer.container.trigger('change')	
 			testScene.button.trigger('click');			
-			expect(testScene.container).not.to.have.class('error')
+			expect(testScene.container).not.to.have.class('js-error')
 		})
 	})
 })

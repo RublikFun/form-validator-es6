@@ -151,7 +151,18 @@ describe('Answer', function(){
 			}).val('73')				
 			testAnswer.container.trigger('change')		
 			expect(testAnswer.isValid()).to.be.true		
-		})  		
+		})
+		it("should check if the answer is a number", function(){
+			fixture.load('html/input-numeric.html');			
+			testAnswer = new Answer($('.test-input'));
+			$(testAnswer.container[0]).val('abc')
+			testAnswer.container.trigger('change')		
+			expect(testAnswer.isValid()).to.be.false	
+
+			$(testAnswer.container[0]).val('1')
+			testAnswer.container.trigger('change')		
+			expect(testAnswer.isValid()).to.be.true				
+		}) 			
 	})	  
 	describe("#revealCallback", function() {
 		it("doesn't add the change event non-input elements", function(){

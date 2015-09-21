@@ -66,8 +66,8 @@ describe('Answers', function(){
 	    testAnswers.createAnswer( $('.test-input') );
 	    testAnswers.createAnswer( $('.test-input-again') );	    
 	    testAnswers.validateAll()
-	    expect(testAnswers.all[0].container).to.have.class('error')
-	    expect(testAnswers.all[1].container).to.have.class('error')	    
+	    expect(testAnswers.all[0].container).to.have.class('js-error')
+	    expect(testAnswers.all[1].container).to.have.class('js-error')	    
 
 		})
 	})	

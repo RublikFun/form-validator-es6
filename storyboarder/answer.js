@@ -3,6 +3,7 @@
 var Answer = function(container){
 	this.ranges      = {};
 	this.required    = {};
+	this.restrictions= {};
 	this.container   = container;
 	this.value       = {};
 	this.validations = [];
@@ -12,6 +13,7 @@ Answer.prototype = {
 	init: function init(){
 		this.setRanges();
 		this.setRequired();
+		this.setRestrictions();
 		this.formatValue();
 		this.setChange(this.container);
 	},
@@ -36,8 +38,8 @@ Answer.prototype = {
 		var self = this;
 		$(this.container).each(function(){
 			self.ranges[$(this).data('field')] = {
-				max: $(this).data('max'), 
-				min: $(this).data('min')
+				max: $(this).data('max') || false, 
+				min: $(this).data('min') || false
 			};
 		});
 	},
@@ -48,6 +50,16 @@ Answer.prototype = {
 				self.required[$(this).data('field')] = false;
 			} else {
 				self.required[$(this).data('field')] = true;
+			}
+		});
+	},
+	setRestrictions: function setRestrictions(){
+		var self = this;
+		$(this.container).each(function(){
+			if($(this).data('numeric') === true ){
+				self.restrictions[$(this).data('field')] = 'numeric';
+			} else {
+				self.restrictions[$(this).data('field')] = false;
 			}
 		});
 	},
@@ -201,10 +213,10 @@ Answer.prototype = {
 	},
 
 	addError: function addError(answer){
-		$('[data-field="'+answer+'"]').addClass('error');
+		$('[data-field="'+answer+'"]').addClass('js-error');
 	},
 	removeError: function removeError(answer){
-		$('[data-field="'+answer+'"]').removeClass('error');
+		$('[data-field="'+answer+'"]').removeClass('js-error');
 	},	
 
 
@@ -231,7 +243,7 @@ Answer.prototype = {
 	},
 	checkIndividualValidity: function checkIndividualValidity(key, value){
 			var fieldIsValid = this.validatePresence(key, value) && 
-												 this.validateRange(key, value);
+												 this.validateContent(key, value);
 			if(fieldIsValid){
 				this.removeError(key);		
 			}
@@ -246,12 +258,13 @@ Answer.prototype = {
 		}
 		return true;
 	},
-	validateRange: function validateRange(key, value){
-		if ( !this.isBetween(key, value) ) {
-			this.addError(key);
-			return false;
+	validateContent: function validateContent(key, value){
+		if ( this.isNumericallyValid( key, value ) && 
+					this.isInRange( key, value ) ) {
+			return true;
 		}		
-		return true;
+		this.addError(key);
+		return false;
 	},
 
 
@@ -273,19 +286,43 @@ Answer.prototype = {
 		}
 		return false;
 	},
+	isNumericallyValid: function isNumericallyValid( key, value ){
+		var hasRestrictions = this.restrictions !== undefined;
+		if( !hasRestrictions ){ return true; }
+		if( this.restrictions[key] === 'numeric' ){
+			return this.isNumeric( value );			
+		}
+		return true;
+	},
+	isNumeric: function isNumeric( value ){	
+		if( isNaN( Number( value ) ) ){
+			return false;
+		}
+		return true;
+	},
+	isAbove: function isAbove( key, value ){
+		var min = this.ranges[key].min;
+		if( !min ){
+			return true;
+		}
+		return this.isNumeric( value ) && value >= min;
+	},
+	isBelow: function isBelow( key, value ){
+		var max = this.ranges[key].max;
+		if( !max ){
+			return true;
+		}
+		return this.isNumeric( value ) && value <= max;		
+	},
 
 
 	isPresent: function isPresent(key, value){
 		return this.required[key] === false || value !== '';
 	},
-	isBetween: function isBetween(key, value){
+	isInRange: function isInRange(key, value){
 		if(this.ranges[key] === undefined){ return true; }
-		var max = this.ranges[key].max;
-		var min = this.ranges[key].min;
-		if(max === undefined || min === undefined){
-			return true;
-		}
-		return value <= max && value >= min;
+		return this.isAbove(key, value) && 
+					 this.isBelow(key, value);
 	},
 
 	addAnswer: function addAnswer(container){

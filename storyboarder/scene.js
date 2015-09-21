@@ -59,10 +59,10 @@ Scene.prototype = {
 		this.container.removeClass('active');
 	},
 	shake : function shake(){
-		this.container.addClass('error');
+		this.container.addClass('js-error');
 	},
 	unshake : function unshake(){
-		this.container.removeClass('error');
+		this.container.removeClass('js-error');
 	},
 	handleCallback: function handleCallback() {
 		var args = typeof this.args === 'function' ? 
@@ -82,7 +82,7 @@ Scene.prototype = {
 	},
 	validate : function validate(){
 		this.answer.isValid();
-		if($(this.answer.container).hasClass('error')){
+		if($(this.answer.container).hasClass('js-error')){
 			this.shake();
 			return false;
 		}

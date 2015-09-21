@@ -40,6 +40,7 @@
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
     "gulp-watch": "^4.3.5",
+    "gulp-webmake": "0.0.4",
     "jquery": "^2.1.4",
     "jshint-stylish": "^2.0.1",
     "karma": "^0.13.9",

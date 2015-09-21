@@ -1,11 +1,12 @@
 'use strict';
 
 var Script = function( container, auto=true ) {
-	this.container   = container;
+	this.container   = container || $('.js-script');
 	this.scenes      = [];
 	this.current     = 0;
+	this.answers     = new Answers();
 	if( auto ){
-		this.init();
+		this.init().start();
 	}
 	return this;
 };
@@ -27,10 +28,6 @@ Script.prototype = {
 		this.answerClass = klass || '.js-answer';
 		return this;
 	},
-	setAnswers: function setAnswers( answers ){
-		this.answers = answers || new Answers();
-		return this;
-	},
 	makeScenes : function makeScenes( opts ){
 		if( this.answers !== undefined ){
 			opts.answers = this.answers;
@@ -46,9 +43,8 @@ Script.prototype = {
 				.setScene( opts.scene )
 				.setButton( opts.button )
 				.setAnswer( opts.answer )
-				.setAnswers( opts.answers )
-				.makeScenes( opts )
-				.start();
+				.makeScenes( opts );
+		return this;
 	},
 
 	addScene : function addScene( el, opts ){
