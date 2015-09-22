@@ -1,7 +1,7 @@
 'use strict';
 
-var Script = function( container, auto=true ) {
-	this.container   = container || $('.js-script');
+var Storyboarder = function( container, auto=true ) {
+	this.container   = container || $('.js-storyboard');
 	this.scenes      = [];
 	this.current     = 0;
 	this.answers     = new Answers();
@@ -10,7 +10,7 @@ var Script = function( container, auto=true ) {
 	}
 	return this;
 };
-Script.prototype = {
+Storyboarder.prototype = {
 	report: function report(){
 		return this.answers.report();
 	},

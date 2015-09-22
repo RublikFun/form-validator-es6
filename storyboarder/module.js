@@ -16,9 +16,9 @@
 }(typeof window !== 'undefined' ? window : this, function( window, noGlobal ) {
 
 	if ( typeof noGlobal === 'undefined' ) {
-		window.Script = Script;
+		window.Storyboarder = Storyboarder;
 	}
 
-	return Script;
+	return Storyboarder;
 
 }));

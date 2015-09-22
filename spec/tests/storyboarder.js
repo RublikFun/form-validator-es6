@@ -1,9 +1,9 @@
 /* jshint ignore:start */
-describe('Script', function(){
+describe('Storyboarder', function(){
 	var testScript
   beforeEach(function() {
 		fixture.load('html/script-basic.html');
-    testScript = new Script( $('.test-script') )
+    testScript = new Storyboarder( $('.test-storyboarder') )
   });
   afterEach(function(){
     testScript = {};  	
@@ -26,7 +26,7 @@ describe('Script', function(){
 			var newScript = {};
 			var callback = {};  		
   		beforeEach(function(){
-		    newScript = new Script( $('.test-script'), false );  	  		
+		    newScript = new Storyboarder( $('.test-storyboarder'), false );  	  		
 		    callback = function(){
 		    	this.hello = this.args
 		    };  		

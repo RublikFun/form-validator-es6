@@ -1,6 +1,6 @@
 module.exports = {
   js: {
-    src: ['./storyboarder/answer.js', './storyboarder/answers.js', './storyboarder/scene.js', './storyboarder/script.js'],
+    src: ['./storyboarder/answer.js', './storyboarder/answers.js', './storyboarder/scene.js', './storyboarder/storyboarder.js'],
     guidelines: './gulp/config/.jshintrc',
     dest: './dist',
     name: 'storyboarder.js'
