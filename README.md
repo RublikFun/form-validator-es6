@@ -12,7 +12,10 @@ Some things Storyboarder is good for:
 	* linking inputs' required states
 	* reporting all input activity in a json-like fashion
 
-##Basic Usage:
+##Examples:
+Check out all of the examples in examples/index-basic.html and examples/index-advanced.html
+
+###Basic Usage:
     <div class="test-storyboarder">
 	    <div class="js-scene">
 		    <input class="js-answer" data-field="test1" type="text">
