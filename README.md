@@ -1,5 +1,5 @@
 # Storyboarder
-Storyboarder is an easy-to-use form wizard/validation library written in ES6. You establish the scenes, navigation buttons, and inputs in the dom and it will handle the rest. Storyboarder works well in all browsers down to (and including) IE8. 
+Storyboarder is an easy-to-use form wizard and form validator that makes form validation easy. You establish the scenes, navigation buttons, and inputs in the dom and it will handle the rest. Storyboarder works well in all browsers down to (and including) IE8. 
 
 Some things Storyboarder is good for:
 -   establishing a linear flow of dom elements ( scenes )
