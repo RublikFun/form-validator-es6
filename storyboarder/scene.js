@@ -1,7 +1,7 @@
 'use strict';
 
-var Scene = function( klass ){
-	this.container   = klass;
+var Scene = function( el ){
+	this.container   = el;
 	this.bound       = false;
 	return this;
 };

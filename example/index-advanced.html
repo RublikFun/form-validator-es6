@@ -30,6 +30,146 @@
          <h3>Advanced Storyboarder</h3>
       </div>
 
+
+      <div class="js-scene">
+        <h3>Adding and Removing scenes from the flow</h3>
+        <ul>
+          <li>Scenes can be added to the storyboarder flow after initialization</li>
+          <li>Scenes can also be removed from the flow.</li>
+          <li>Scenes can be added in two ways:
+            <ul>
+              <li>At an index with #addAt</li>
+              <li>At the end with #addScene</li>
+            </ul>
+          </li>
+          <li>Scenes can be removed in two ways:
+            <ul>
+              <li>At an index with #removeAt</li>
+              <li>At the end with #removeScene</li>
+            </ul>
+          </li>
+        </ul>
+        <h3>#addAt(index, $el, optionsHash)</h3>
+        <code>
+          var storyboarder = new Storyboarder()<br>
+          storyboarder.addAt(1, $('.js-additional-scene'), {<br>
+            &nbsp; callback: func,<br>
+            &nbsp; callbackArgs: func||val,<br>
+            &nbsp; button: '.buttonClass',<br>
+            &nbsp; answer: '.answerClass'})<br>
+            //adds the js-additional-scene after the first scene<br>
+            //suggest manual init if you want to add a scene at the beginning
+        </code>
+        <h3>#addScene($el, optionsHash)</h3>
+        <code>
+          var storyboarder = new Storyboarder()<br>
+          storyboarder.addScene($('.js-additional-scene'), {<br>
+            &nbsp; callback: func,<br>
+            &nbsp; callbackArgs: func||val,<br>
+            &nbsp; button: '.buttonClass',<br>
+            &nbsp; answer: '.answerClass'})<br>
+            //adds the js-additional-scene at the end<br>
+        </code>        
+        <h3>#removeAt(index)</h3>
+        <code>
+          var storyboarder = new Storyboarder()<br>
+          storyboarder.removeAt(0)<br>
+          //removes the first scene from the flow
+        </code>
+        <h3>#removeScene()</h3>
+        <code>
+          var storyboarder = new Storyboarder()<br>
+          storyboarder.removeScene()<br>
+          //removes the last scene from the flow
+        </code>
+        <br>
+        <button class="js-button">Next</button>
+      </div>
+
+
+      <div class="js-scene">
+        <h3>Multidimensional Answers</h3>
+        <ul>
+          <li>Each answer can have a data-grouping attribute</li>
+          <li>This attribute only affects how the answer is reported</li>
+          <li>Each answer is individually validated</li>
+        </ul>
+        <code>
+          &lt;input type=&quot;text&quot; class=&quot;js-answer&quot; data-field=&quot;mixed-test1&quot; data-grouping=&quot;testgroup&quot;&gt;<br/>
+          &lt;select class=&quot;js-answer&quot; data-field=&quot;mixed-test2&quot; data-grouping=&quot;testgroup&quot;&gt;<br/>
+          &nbsp; &lt;option value=&quot;&quot;&gt;---&lt;/option&gt;<br/>
+          &nbsp; &lt;option value=&quot;mixed-test-select-1&quot;&gt;&lt;/option&gt;<br/>
+          &nbsp; &lt;option value=&quot;mixed-test-select-2&quot;&gt;&lt;/option&gt;<br/>
+          &lt;/select&gt;<br/>
+          &lt;input type=&quot;checkbox&quot; class=&quot;js-answer&quot; value=&quot;mixed-test-check-1&quot; data-field=&quot;mixed-test-check-1&quot;&gt;<br/>
+          &lt;input type=&quot;checkbox&quot; class=&quot;js-answer&quot; value=&quot;mixed-test-check-2&quot; data-field=&quot;mixed-test-check-2&quot;&gt;<br>
+          <br>
+          //will be reported as//<br>
+          { <br>
+            &nbsp; "testgroup": {<br>
+              &nbsp; &nbsp; "mixed-test1": val,<br>
+              &nbsp; &nbsp; "mixed-test2": val<br>
+            &nbsp; },<br>
+            &nbsp; "mixed-test-check-1": val,<br>
+            &nbsp; "mixed-test-check-2": val<br>
+          }<br>
+        </code><br>
+        <div>
+          <h4>Demo</h4>
+          <!-- multidimensional and mixed answers -->
+          <label for="grouped-text">Grouped Text Field</label>
+          <input id="grouped-text" type="text" class="js-answer" data-field="mixed-test1" data-grouping="testgroup">
+          <br>
+          <label for="grouped-select">Grouped Select Field</label>
+          <select class="js-answer" data-field="mixed-test2" data-grouping="testgroup">
+            <option value="">---</option>
+            <option value="mixed-test-select-1">Mixed Test value 1</option>
+            <option value="mixed-test-select-2">Mixed Test value 2</option>
+          </select>
+          <br>
+          <label for="ungrouped-check1">Un-Grouped  Checkbox1</label>
+          <input id="ungrouped-check1" type="checkbox" class="js-answer" name="mixed-test4" value="mixed-test-check-1" data-field="mixed-test-check-1"><br>
+          <label for="ungrouped-check2">Un-Grouped  Checkbox2</label>
+          <input id="ungrouped-check2" type="checkbox" class="js-answer" name="mixed-test4" value="mixed-test-check-2" data-field="mixed-test-check-2"> <br>
+          <button class="js-button">
+            next
+          </button>          
+        </div>
+      </div>
+
+
+      <div class="js-scene">
+        <h3>Initializing with options</h3>
+        <ul>
+          <li>By default the Storyboarder will auto initialze.</li>
+          <li>To Disable the auto initialization, pass false as the second argument</li>
+        </ul>
+        <h3>#init( options hash )</h3>
+        <code>
+          //Auto initialzed//<br>
+          var storyboard = new Storyboarder();<br>
+          <br>
+          //With a dom element//<br>
+          var storyboard = new Storyboarder($('.js-storyboarder'));<br>
+          <br>
+          //Manually initialzed//<br>
+          var storyboard = new Storyboarder($('.js-storyboarder'), false)<br>
+           storyboard.init({<br>
+                &nbsp; onFinished: func,<br>
+                &nbsp; onFinishedArgs: func||val,<br>
+                &nbsp; scene: '.sceneclass',<br>
+                &nbsp; button: '.buttonclass',<br>
+                &nbsp; answer: '.answerclass',<br>
+                &nbsp; callback: func,<br>
+                &nbsp; callbackArgs: func||val })<br>
+        </code><br>
+
+        <button class="js-button">
+          next
+        </button>
+      </div>
+
+
       <div class="js-scene">
         <h3>Setting the Storyboarder's onFinished callback</h3>
         <ul>
@@ -67,6 +207,7 @@
           next
         </button>
       </div>
+
 
       <div class="js-scene">
         <h3>Setting the scenes' callback</h3>
@@ -106,6 +247,41 @@
         </button>
       </div>
 
+     <div class="js-scene">
+        <h3>Setting an answer's callback</h3>
+        <ul>
+          <li>Answer callbacks do two things: 
+            <ul>
+              <li>Add a 'js-active' and 'active' class to an element</li>
+              <li>If the element is an answer, add it to the scene</li>
+            </ul>
+          </li>
+          <li>The answer will look for any element with the class specified in the data-callback</li>
+          <li>The callback element will be revealed before the answers are validated</li>
+          <li>The revealed element, if it is an answer, is automagically considered required even if the original answers are not.</li>
+        </ul>
+        <code>
+          &lt;input type=&quot;checkbox&quot; class=&quot;js-answer&quot; value=&quot;hidden-test1&quot; data-field=&quot;reveal-field&quot; data-required=&quot;false&quot;&gt;<br/>
+          &lt;input type=&quot;checkbox&quot; class=&quot;js-answer&quot; value=&quot;hidden-test2&quot; data-field=&quot;reveal-field&quot; data-callback=&quot;js-callback&quot; data-required=&quot;false&quot;&gt;<br/>
+          &lt;input type=&quot;text&quot; class=&quot;js-callback hidden&quot; data-field=&quot;hidden-field&quot; data-required=&quot;false&quot;&gt;
+        </code>
+        <div>
+          <h4>Demo</h4>
+          <label for="hidden-test1">Does not reveal field</label>
+          <input type="checkbox" id="hidden-test1" class="js-answer" name="reveal-field" value="hidden-test1" data-field="reveal-field" data-required="false">
+          <br>
+          <label for="hidden-test2">Reveals field</label>
+          <input id="hidden-test2" type="checkbox" class="js-answer" name="reveal-field" value="hidden-test2" data-field="reveal-field" data-callback="js-callback" data-required="false">
+          <br>
+          <label for="hidden-test3" class='js-callback hidden'>HIdden Field</label>
+          <input id="hidden-test3" type="text" class="js-callback hidden" data-field="hidden-field" >          
+          <button class="js-button">
+            next
+          </button>          
+        </div>
+        
+      </div>        
+
 
       <div class="js-followup">
         <p>That covers the basic functionality, click the link below to find out about the advanced functionality including initializing with options, multidimensional answers, storyboarder callbacks, scene callbacks, and answer callbacks. </p>
@@ -136,65 +312,3 @@
 </html>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <div class="js-scene">
-          <label for="hidden-test1">Does not reveal field</label>
-          <input type="checkbox" id="hidden-test1" class="js-answer" name="reveal-field" value="hidden-test1" data-field="reveal-field" data-required="false">
-          <br>
-          <label for="hidden-test2">Reveals field</label>
-          <input id="hidden-test2" type="checkbox" class="js-answer" name="reveal-field" value="hidden-test2" data-field="reveal-field" data-callback="js-callback" data-required="false">
-          <br>
-          <label for="hidden-test3">HIdden Field</label>
-          <input id="hidden-test3" type="text" class="js-callback hidden" data-field="hidden-field" >
-         <div class="js-button">next</div>
-      </div>
-
-      <div class="js-scene">
-        <!-- multidimensional and mixed answers -->
-          <label for="grouped-text">Grouped Text Field</label>
-          <input id="grouped-text" type="text" class="js-answer" data-field="mixed-test1" data-grouping="testgroup">
-          <br>
-          <label for="grouped-select">Grouped Select Field</label>
-          <select class="js-answer" data-field="mixed-test2" data-grouping="testgroup">
-            <option value="">---</option>
-            <option value="mixed-test-select-1">Mixed Test value 1</option>
-            <option value="mixed-test-select-2">Mixed Test value 2</option>
-          </select>
-          <br>
-          <label for="ungrouped-check1">Un-Grouped  Checkbox1</label>
-          <input id="ungrouped-check1" type="checkbox" class="js-answer" name="mixed-test4" value="mixed-test-check-1" data-field="mixed-test-check-1"><br>
-          <label for="ungrouped-check2">Un-Grouped  Checkbox2</label>
-          <input id="ungrouped-check2" type="checkbox" class="js-answer" name="mixed-test4" value="mixed-test-check-2" data-field="mixed-test-check-2">
-        <div class="js-button">next</div>
-      </div>
-
-
-    <div class="js-additional-scene">
-      <!-- added inputs, required and not -->
-      <label for="additional-required">required field added to flow:</label>
-      <input id="additional-required" type="text" class="js-answer" data-field="additional-test-1" >
-      <br>
-      <label for="additional-notrequired">unrequired field added to flow:</label>
-      <input id="additional-notrequired" type="text" class="js-answer" data-field="additional-test-2" data-required="false">
-      <div class="js-button">next</div>
-    </div>

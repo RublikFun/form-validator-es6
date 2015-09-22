@@ -50,14 +50,7 @@
         <br>
         <h3>Storyboarder javascript incantation:</h3>
         <code>
-          //Auto initialzed//
           var storyboard = new Storyboarder();
-
-          //With a dom element//
-          var storyboard = new Storyboarder($('.js-storyboarder'));
-
-          //Manually initialzed//
-          var storyboard = new Storyboarder($('.js-storyboarder'), false).init()
         </code>
         <h3> A basic Storyboarder.</h3>
         <ul>
@@ -66,8 +59,6 @@
           <li>By default the Storyboarder will look for the '.js-storyboarder' class.</li>
           <li>You can pass it a queried dom element to override the default.</li>
           <li>The Storyboarder should filled with scenes.</li>
-          <li>By default the Storyboarder will auto initialze.</li>
-          <li>To Disable the auto initialization, pass false as the second argument</li>
         </ul>
         <code>
           &lt;div class=&quot;js-storyboarder&quot;&gt;<br/>
@@ -322,7 +313,14 @@
 
 
       <div class="js-followup">
-        <p>That covers the basic functionality, click the link below to find out about the advanced functionality including initializing with options, multidimensional answers, storyboarder callbacks, scene callbacks, and answer callbacks. </p>
+        <p>That covers the basic functionality, click the link below to find out about the advanced functionality including:</p>
+        <ul>
+          <li>initializing with options</li>
+          <li>multidimensional answers</li>
+          <li>adding scenes to the storyboarder</li>
+          <li>storyboarder finished callbacks</li>
+          <li>scene finished callbacks</li>
+          <li>answer callbacks</li>
         <a href="index-advanced.html"> Advance </a>
       </div>
   </div>

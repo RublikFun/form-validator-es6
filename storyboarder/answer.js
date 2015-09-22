@@ -169,7 +169,7 @@ Answer.prototype = {
 					self.addAnswer( $( this ) );
 				}
 			} );
-			callbackElement.addClass( 'active' );
+			callbackElement.addClass( 'active' ).addClass( 'js-active' );
 		}
 	},
 	revertCallback: function revertCallback( el ){
@@ -177,7 +177,7 @@ Answer.prototype = {
 		if( callbackElement.length > 0 ){
 			this.clearValue( callbackElement );
 			this.removeAnswer( callbackElement );
-			callbackElement.removeClass( 'active' );
+			callbackElement.removeClass( 'active' ).removeClass( 'js-active' );
 		}
 	},
 
