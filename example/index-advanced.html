@@ -293,7 +293,7 @@
 
 
   <script type="text/javascript">
-    var testScript = new Script($('.js-scenes-container'), false)
+    var testScript = new Storyboarder($('.js-scenes-container'), false)
         testScript.init({ onFinished: showFollowUp, callback: showReport, callbackArgs: testScript.answers.report.bind(testScript.answers)})
     testScript.start();
     // testScript.addAt(1, $('.js-additional-scene'), showReport, testScript.answers.report.bind(testScript.answers));
