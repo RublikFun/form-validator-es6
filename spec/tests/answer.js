@@ -9,6 +9,30 @@ describe('Answer', function(){
   	fixture.cleanup();
   })  
 	describe("#record", function(){
+		it("text and tel are allowable input types", function(){
+      var textInput = $(document.createElement('input'))
+        .data('field', 'test')
+        .attr('type', 'text')
+        .val('test');
+
+      var telInput = $(document.createElement('input'))
+        .data('field', 'test')
+        .attr('type', 'tel')
+        .val('test');
+
+      var badInput = $(document.createElement('input'))
+        .data('field', 'test')
+        .attr('type', 'bad')
+        .val('test');
+      var textAnswer = new Answer(textInput);
+      var telAnswer = new Answer(telInput);
+      var badAnswer = new Answer(badInput);
+
+      expect(textAnswer.value.test).to.equal('test');
+      expect(telAnswer.value.test).to.equal('test');
+      expect(badAnswer.value.test).to.equal('');
+    })   
+
 		it("should record text answer data", function(){
 			fixture.load('html/input-text.html');
 	    testAnswer = new Answer($('.test-input'));					

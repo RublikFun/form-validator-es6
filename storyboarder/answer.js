@@ -198,8 +198,9 @@ Answer.prototype = {
 	isFirst: function isFirst(el){
 		return $('[data-field="'+el.data('field')+'"]').index(el) === 0;
 	},
+
 	clearValue: function clearValue(el){
-		if( this.isValidInput(el) ){
+    if( this.isValidInput(el) ){
 			el.val('');
 		}
 		el.prop('checked', false);
@@ -267,11 +268,15 @@ Answer.prototype = {
 		return false;
 	},
 
+  isAnAllowableInputType: function isAnAllowableInputType(el) {
+    return ['text', 'tel'].indexOf(el.attr('type')) > -1;
+  },
 
 	isValidInput: function isValidInput(el) {
-		if ( el.attr('type') === 'text' ) {
+    if (this.isAnAllowableInputType(el)) {
 			return true;
 		}
+
 		return false;
 	},
 	isValidCheckbox: function isValidCheckbox(el) {
